@@ -1,5 +1,9 @@
 require "contentstack/version"
 
 module Contentstack
-  # Your code goes here...
+    class Api
+        def self.content
+            "some more content"    
+        end
+    end
 end
