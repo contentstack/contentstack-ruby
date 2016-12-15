@@ -2,14 +2,59 @@
 module Contentstack
 
   class Client
-    attr_reader :access_key, :access_token, :environment
+
+    DEFAULT_CONFIGURATION = {
+      protocol: "https://",
+      host: "cdn.contentstack.io",
+      port: 443,
+      version: "v3",
+      urls: {
+        content_types: "/content_types/",
+        entries: "/entries/",
+        environments: "/environments/"
+      }
+    }
+
+    attr_reader :access_key, :access_token, :environment, :configuration, :port
 
     def initialize(access_key:, access_token:, environment:)
       @access_key = access_key
       @access_token = access_token
       @environment = environment
-
+      
+      set_default_configuration
       validate_configuration!
+    end
+
+    def set_default_configuration
+      @configuration = DEFAULT_CONFIGURATION
+    end
+
+    def protocol
+      @configuration[:protocol]
+    end
+
+    def set_protocol(insecure: false)
+      @configuration[:protocol] = 'http://' if insecure
+      self
+    end
+
+    def set_port(port)
+      @configuration[:port] = port if port.is_a? Numeric
+      self
+    end
+
+    def port
+      @configuration[:port]
+    end
+
+    def host
+      @configuration[:host]
+    end
+
+    def set_host(host)
+      @configuration[:host] = host if host.is_a? String
+      self
     end
 
     def validate_configuration!
