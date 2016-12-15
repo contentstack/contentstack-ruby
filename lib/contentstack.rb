@@ -1,9 +1,9 @@
 require "contentstack/version"
+require "contentstack/client"
+
 
 module Contentstack
-    class Api
-        def self.content
-            "some more content"    
-        end
-    end
+  # The client object is initialized with a space and a key and then used
+  # for querying resources from this space.
+  # See README for details
 end
