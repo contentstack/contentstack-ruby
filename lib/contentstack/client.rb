@@ -15,20 +15,27 @@ module Contentstack
       }
     }
 
-    attr_reader :access_key, :access_token, :environment, :configuration, :port
+    attr_reader :access_key, :access_token, :environment, :configuration, :port, :headers
 
     def initialize(access_key:, access_token:, environment:)
       @access_key = access_key
       @access_token = access_token
       @environment = environment
       
+      set_headers
       set_default_configuration
       validate_configuration!
+    end
+
+    def set_headers
+      @headers = { access_key: access_key, access_token: access_token }
     end
 
     def set_default_configuration
       @configuration = DEFAULT_CONFIGURATION
     end
+
+
 
     def protocol
       @configuration[:protocol]

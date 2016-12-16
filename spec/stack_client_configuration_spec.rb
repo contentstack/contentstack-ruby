@@ -29,9 +29,13 @@ describe 'Contentstack::Client' do
   end
 
   describe "has default configuration available on initialization" do
-    it "should not have empty configuration parameters" do
-      expect(create_client.configuration).to_not be_empty
-    end
+    subject { client.configuration }
+    it { should_not be_empty }
+  end
+
+  describe "has headers set on initialization" do
+    subject { client.headers }
+    it { should_not be_empty }
   end
 
   describe "allows changing certain configuration parameters after instantiation" do
