@@ -9,9 +9,9 @@ describe 'Contentstack::Client' do
       expect { create_client(access_token: '') }.to raise_error(ArgumentError, "You must specify a valid access_token")
     end
 
-    it "access_key is required and cannot be a blank string" do
-      expect { create_client(access_key: nil) }.to  raise_error(ArgumentError, "You must specify a valid access_key")
-      expect { create_client(access_key: '') }.to raise_error(ArgumentError, "You must specify a valid access_key")
+    it "api_key is required and cannot be a blank string" do
+      expect { create_client(api_key: nil) }.to  raise_error(ArgumentError, "You must specify a valid api_key")
+      expect { create_client(api_key: '') }.to raise_error(ArgumentError, "You must specify a valid api_key")
     end
 
     it "environment is required and cannot be a blank string" do
@@ -48,8 +48,8 @@ describe 'Contentstack::Client' do
       expect(client.set_protocol(insecure: true).protocol).to eq 'http://'
     end
 
-    it "allows changing host" do
-      expect(client.set_host("cdn.my-custom.domain").host).to eq 'cdn.my-custom.domain'
-    end
+    # it "allows changing host" do
+    #   expect(client.set_host("cdn.my-custom.domain").host).to eq 'cdn.my-custom.domain'
+    # end
   end     
 end
