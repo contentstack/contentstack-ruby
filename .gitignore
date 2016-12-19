@@ -5,5 +5,7 @@
 /coverage/
 /doc/
 /pkg/
+/lib/debugger.rb
 /spec/reports/
 /tmp/
+.env
