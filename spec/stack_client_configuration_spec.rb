@@ -48,8 +48,8 @@ describe 'Contentstack::Client' do
       expect(client.set_protocol(insecure: true).protocol).to eq 'http://'
     end
 
-    # it "allows changing host" do
-    #   expect(client.set_host("cdn.my-custom.domain").host).to eq 'cdn.my-custom.domain'
-    # end
+    xit "allows changing host" do
+      expect(client.set_host("cdn.my-custom.domain").host).to eq 'cdn.my-custom.domain'
+    end
   end     
 end
