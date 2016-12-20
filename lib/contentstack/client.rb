@@ -20,14 +20,17 @@ module Contentstack
 
     attr_reader :api_key, :access_token, :environment, :configuration, :port, :headers, :content_type, :entry_uid, :asset_uid
 
+    # @param [String] api_key
+    # @param [String] access_token
+    # @param [String] environment
     def initialize(api_key:, access_token:, environment:)
       @api_key = api_key
       @access_token = access_token
       @environment = environment
       
-      set_headers
       set_default_configuration
       validate_configuration!
+      set_headers
     end
 
     def set_headers
