@@ -8,6 +8,7 @@ module Contentstack
     attr_reader :endpoint
 
     def initialize(client, endpoint)
+      # puts endpoint
       @client = client
       @endpoint = endpoint
     end
