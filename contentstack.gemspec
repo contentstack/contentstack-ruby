@@ -37,6 +37,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 12.0'
   spec.add_development_dependency 'rspec', '~> 3.5'
   spec.add_development_dependency 'vcr', '~> 3.0', '>= 3.0.3'
+  spec.add_development_dependency 'awesome_print'
   spec.add_development_dependency 'webmock', '~> 2.3', '>= 2.3.1'
   spec.add_development_dependency 'dotenv', '~> 2.1', '>= 2.1.1'
 end
