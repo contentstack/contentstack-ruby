@@ -1,8 +1,12 @@
 require_relative 'request'
+require_relative 'utils'
+
+require 'forwardable'
 
 module Contentstack
 
   class Client
+    extend Forwardable
 
     DEFAULT_CONFIGURATION = {
       protocol: "https://",
@@ -18,8 +22,14 @@ module Contentstack
       }
     }
 
-    attr_reader :api_key, :access_token, :environment, :configuration, :port, :headers, :content_type, :entry_uid, :asset_uid
+    attr_reader :api_key, :access_token, :environment, :configuration, 
+                :headers, :content_type, :entry_uid, :asset_uid
 
+    # def_delegators :@query, :entries, :entry, :content_types, :content_type, :assets, :asset
+    def_delegators :@configuration, :protocol, :port, :host
+
+    # Initializes a valid client with required credentials
+    #
     # @param [String] api_key
     # @param [String] access_token
     # @param [String] environment
@@ -31,35 +41,24 @@ module Contentstack
       @access_token = access_token
       @environment = environment
 
-      set_default_configuration
+      @configuration = Utils.to_openstruct(DEFAULT_CONFIGURATION)
+
       validate_configuration!
       set_headers
     end
 
-    def protocol
-      @configuration[:protocol]
-    end
-
-    def port
-      @configuration[:port]
-    end
-
-    def host
-      @configuration[:host]
-    end
-
     def set_protocol(insecure: false)
-      @configuration[:protocol] = 'http://' if insecure
+      @configuration.protocol = 'http://' if insecure
       self
     end
 
     def set_port(port)
-      @configuration[:port] = port if port.is_a? Numeric
+      @configuration.port = port if port.is_a? Numeric
       self
     end
 
     def set_host(host)
-      @configuration[:host] = host if host.is_a? String
+      @configuration.host = host if host.is_a? String
       self
     end
 
@@ -109,17 +108,17 @@ module Contentstack
     def endpoint(resource:)
       case resource
       when :entries
-        "#{base_url}#{configuration[:urls][:content_types]}#{content_type}#{configuration[:urls][:entries]}"
+        "#{content_url}#{content_type}#{configuration.urls.entries}"
       when :content_types
-        "#{base_url}#{configuration[:urls][:content_types]}"
+        "#{content_url}"
       when :content_type
-        "#{base_url}#{configuration[:urls][:content_types]}#{content_type}"
+        "#{content_url}#{content_type}"
       when :entry
-        "#{base_url}#{configuration[:urls][:content_types]}#{content_type}#{configuration[:urls][:entries]}#{entry_uid}"
+        "#{content_url}#{content_type}#{configuration.urls.entries}#{entry_uid}"
       when :assets
-        "#{base_url}#{configuration[:urls][:assets]}"
+        "#{asset_url}"
       when :asset
-        "#{base_url}#{configuration[:urls][:assets]}#{asset_uid}"
+        "#{asset_url}#{asset_uid}"
       end
 
       # https://api.contentstack.io/v3/content_types/shirts/entries?environment=dev
@@ -128,17 +127,25 @@ module Contentstack
     # Returns the base url for all of the client's requests
     # @private
     def base_url
-      "#{protocol}#{host}/#{configuration[:version]}"
+      "#{protocol}#{host}/#{configuration.version}"
+    end
+
+    # Returns the content url for all of the client's requests
+    # @private
+    def content_url
+      "#{base_url}#{configuration.urls.content_types}"
+    end
+
+    # Returns the asset url for all of the client's requests
+    # @private
+    def asset_url
+      "#{base_url}#{configuration.urls.assets}"
     end
 
     private
 
     def set_headers
       @headers = { api_key: api_key, access_token: access_token }
-    end
-
-    def set_default_configuration
-      @configuration = DEFAULT_CONFIGURATION
     end
 
     def validate_configuration!
