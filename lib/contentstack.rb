@@ -9,4 +9,4 @@ module Contentstack
   # See README for details
 end
 
-# require 'debugger'
+require 'debugger'

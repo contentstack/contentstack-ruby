@@ -1,6 +1,4 @@
-require 'typhoeus'
-require "contentstack/response"
-require 'multi_json'
+require_relative 'request'
 
 module Contentstack
 
@@ -9,16 +7,18 @@ module Contentstack
     DEFAULT_CONFIGURATION = {
       protocol: "https://",
       host: "cdn.contentstack.io",
+      asset_host: "images.contentstack.io",
       port: 443,
       version: "v3",
       urls: {
         content_types: "/content_types/",
         entries: "/entries/",
-        environments: "/environments/"
+        environments: "/environments/",
+        assets: "/assets/"
       }
     }
 
-    attr_reader :api_key, :access_token, :environment, :configuration, :port, :headers
+    attr_reader :api_key, :access_token, :environment, :configuration, :port, :headers, :content_type, :entry_uid, :asset_uid
 
     def initialize(api_key:, access_token:, environment:)
       @api_key = api_key
@@ -71,34 +71,60 @@ module Contentstack
       fail(ArgumentError, "You must specify a valid environment") if environment.nil? || environment.empty?
     end
 
-    def content_type(content_type_uid)
-      @content_type = content_type_uid if content_type_uid.is_a? String
-      self
+    def entries(content_type:)
+      fail(ArgumentError, "content_type has to be a string") unless content_type.is_a? String
+      @content_type = content_type
+      Request.new(self, endpoint(resource: :entries)).fetch.entries
     end
 
-    def get_content_type
-      @content_type
+    def content_types
+      Request.new(self, endpoint(resource: :content_types)).fetch.content_types
     end
 
-    def get
-      response = Typhoeus::Request.new(
-        endpoint,
-        headers: { api_key: headers[:api_key], access_token: headers[:access_token],
-        accept_encoding: "gzip" }
-      ).run
-
-      # begin
-      #   Response.new(MultiJson.load(response.body, :symbolize_keys => true))
-      # rescue MultiJson::ParseError => exception
-      #   exception.data # => "{invalid json}"
-      #   exception.cause # => JSON::ParserError: 795: unexpected token at '{invalid json}'
-      # end
+    def get_content_type(content_type)
+      fail(ArgumentError, "content_type has to be a string") unless content_type.is_a? String
+      @content_type = content_type
+      Request.new(self, endpoint(resource: :content_type)).fetch.content_type
     end
 
+    def entry(content_type:, entry_uid:)
+      fail(ArgumentError, "inputs have to be string") unless content_type.is_a? String
+      @content_type = content_type
+      @entry_uid = entry_uid
+      Request.new(self, endpoint(resource: :entry)).fetch.entry
+    end
+
+    def assets
+      Request.new(self, endpoint(resource: :assets)).fetch.assets
+    end
+
+    def asset(asset_uid:)
+      fail(ArgumentError, "content_type has to be a string") unless asset_uid.is_a? String
+      @asset_uid = asset_uid
+      Request.new(self, endpoint(resource: :asset)).fetch.asset
+    end
     
-    def endpoint
+    def endpoint(resource:)
+      case resource
+      when :entries
+        "#{base_url}#{configuration[:urls][:content_types]}#{content_type}#{configuration[:urls][:entries]}"
+      when :content_types
+        "#{base_url}#{configuration[:urls][:content_types]}"
+      when :content_type
+        "#{base_url}#{configuration[:urls][:content_types]}#{content_type}"
+      when :entry
+        "#{base_url}#{configuration[:urls][:content_types]}#{content_type}#{configuration[:urls][:entries]}#{entry_uid}"
+      when :assets
+        "#{base_url}#{configuration[:urls][:assets]}"
+      when :asset
+        "#{base_url}#{configuration[:urls][:assets]}#{asset_uid}"
+      end
+
       # https://api.contentstack.io/v3/content_types/shirts/entries?environment=dev
-      "#{protocol}#{host}/#{configuration[:version]}#{configuration[:urls][:content_types]}#{get_content_type}#{configuration[:urls][:entries]}"
+    end
+
+    def base_url
+      "#{protocol}#{host}/#{configuration[:version]}"
     end
 
   end

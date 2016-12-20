@@ -9,6 +9,10 @@ WebMock.disable_net_connect!(allow_localhost: true)
 Dir[File.dirname(__FILE__) + '/support/**/*.rb'].each { |f| require f }
 
 RSpec.configure do |config|
+  config.extend VCR::RSpec::Macros
+  config.raise_errors_for_deprecations!
+  config.filter_run :focus => true
+  config.run_all_when_everything_filtered = true
   config.before(:each) do
     stub_request(:get, /api.github.com/).
          with(:headers => {'Expect'=>'', 'User-Agent'=>'Typhoeus - https://github.com/typhoeus/typhoeus'}).

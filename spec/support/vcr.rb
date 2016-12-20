@@ -2,9 +2,9 @@ require 'vcr'
 
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
-  c.ignore_localhost = true
+  # c.ignore_localhost = true
+  c.default_cassette_options = { :record => :new_episodes }
   c.hook_into :webmock
-  c.default_cassette_options = { record: :once }
 end
 
 def vcr(name, &block)
