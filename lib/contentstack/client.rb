@@ -23,26 +23,29 @@ module Contentstack
     # @param [String] api_key
     # @param [String] access_token
     # @param [String] environment
+    # @example Initializes a new client object with required credentials
+    #   client = Contentstack::Client.new(access_token: ENV['ACCESS_TOKEN'], api_key: ENV['API_KEY'], environment: ENV['STACK_ENV'])
+
     def initialize(api_key:, access_token:, environment:)
       @api_key = api_key
       @access_token = access_token
       @environment = environment
-      
+
       set_default_configuration
       validate_configuration!
       set_headers
     end
 
-    def set_headers
-      @headers = { api_key: api_key, access_token: access_token }
-    end
-
-    def set_default_configuration
-      @configuration = DEFAULT_CONFIGURATION
-    end
-
     def protocol
       @configuration[:protocol]
+    end
+
+    def port
+      @configuration[:port]
+    end
+
+    def host
+      @configuration[:host]
     end
 
     def set_protocol(insecure: false)
@@ -55,25 +58,19 @@ module Contentstack
       self
     end
 
-    def port
-      @configuration[:port]
-    end
-
-    def host
-      @configuration[:host]
-    end
-
     def set_host(host)
       @configuration[:host] = host if host.is_a? String
       self
     end
 
-    def validate_configuration!
-      fail(ArgumentError, "You must specify a valid api_key") if api_key.nil? || api_key.empty?
-      fail(ArgumentError, "You must specify a valid access_token") if access_token.nil? || access_token.empty? 
-      fail(ArgumentError, "You must specify a valid environment") if environment.nil? || environment.empty?
-    end
 
+    # Fetches entries from the given content_type
+    #
+    # @param [String] content_type
+    #
+    # @return [Contentstack::Response]
+    # @example
+    #   entries = client.entries(content_type: 'shirts')
     def entries(content_type:)
       fail(ArgumentError, "content_type has to be a string") unless content_type.is_a? String
       @content_type = content_type
@@ -107,6 +104,8 @@ module Contentstack
       Request.new(self, endpoint(resource: :asset)).fetch.asset
     end
     
+    # Makes it easy to retrieve relevant endpoints from the configuration hash
+    # @private
     def endpoint(resource:)
       case resource
       when :entries
@@ -126,9 +125,28 @@ module Contentstack
       # https://api.contentstack.io/v3/content_types/shirts/entries?environment=dev
     end
 
+    # Returns the base url for all of the client's requests
+    # @private
     def base_url
       "#{protocol}#{host}/#{configuration[:version]}"
     end
+
+    private
+
+    def set_headers
+      @headers = { api_key: api_key, access_token: access_token }
+    end
+
+    def set_default_configuration
+      @configuration = DEFAULT_CONFIGURATION
+    end
+
+    def validate_configuration!
+      fail(ArgumentError, "You must specify a valid api_key") if api_key.nil? || api_key.empty?
+      fail(ArgumentError, "You must specify a valid access_token") if access_token.nil? || access_token.empty? 
+      fail(ArgumentError, "You must specify a valid environment") if environment.nil? || environment.empty?
+    end
+
 
   end
 
