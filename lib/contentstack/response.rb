@@ -1,4 +1,5 @@
 require "multi_json"
+require_relative 'entries'
 
 module Contentstack
 
@@ -15,7 +16,7 @@ module Contentstack
     end
 
     def entries
-      @body[:entries]
+      Entries.new(@body[:entries])
     end
 
     def content_types
@@ -37,6 +38,7 @@ module Contentstack
     def asset
       @body[:asset]
     end
+
   end
 
 end
