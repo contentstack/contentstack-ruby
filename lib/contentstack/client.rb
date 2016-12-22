@@ -1,10 +1,12 @@
 require_relative 'request'
+require_relative "response"
+require_relative 'query'
 require_relative 'utils'
 
 require 'forwardable'
+require "byebug"
 
 module Contentstack
-
   class Client
     extend Forwardable
 
@@ -62,18 +64,18 @@ module Contentstack
       self
     end
 
-
     # Fetches entries from the given content_type
     #
     # @param [String] content_type
+    # @param [Hash] query hash
     #
     # @return [Contentstack::Response]
     # @example
     #   entries = client.entries(content_type: 'shirts')
-    def entries(content_type:)
-      fail(ArgumentError, "content_type has to be a string") unless content_type.is_a? String
-      @content_type = content_type
-      Request.new(self, endpoint(resource: :entries)).fetch.entries
+    def entries(content_type:, query: {})
+      set_content_type(content_type.to_s)
+      # normalize_select!(query) if query
+      Request.new(self, endpoint(resource: :entries), query).fetch.entries
     end
 
     def content_types
@@ -82,13 +84,17 @@ module Contentstack
 
     def get_content_type(content_type)
       fail(ArgumentError, "content_type has to be a string") unless content_type.is_a? String
-      @content_type = content_type
+      set_content_type(content_type)
       Request.new(self, endpoint(resource: :content_type)).fetch.content_type
+    end
+
+    def set_content_type(content_type)
+      @content_type = content_type
     end
 
     def entry(content_type:, entry_uid:)
       fail(ArgumentError, "inputs have to be string") unless content_type.is_a? String
-      @content_type = content_type
+      set_content_type(content_type)
       @entry_uid = entry_uid
       Request.new(self, endpoint(resource: :entry)).fetch.entry
     end
@@ -142,6 +148,18 @@ module Contentstack
       "#{base_url}#{configuration.urls.assets}"
     end
 
+    def fetch(request)
+      response = Typhoeus::Request.new(
+        request.endpoint,
+        headers: { 
+          api_key: headers[:api_key], 
+          access_token: headers[:access_token],
+          accept_encoding: "gzip" }
+      ).run
+
+      Response.new(response.body)
+    end
+
     private
 
     def set_headers
@@ -154,7 +172,10 @@ module Contentstack
       fail(ArgumentError, "You must specify a valid environment") if environment.nil? || environment.empty?
     end
 
-
+    # If the query contains the :select operator
+    def normalize_select!(query)
+      return unless query.key?(:select)
+      query[:select] = query[:select].split(',').map(&:strip) if query[:select].is_a? String
+    end
   end
-
 end
