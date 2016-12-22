@@ -1,28 +1,35 @@
-require_relative "response"
 
 require 'typhoeus'
 
 module Contentstack
   class Request
 
-    attr_reader :endpoint
+    attr_reader :endpoint, :client
 
-    def initialize(client, endpoint)
+    def initialize(client, endpoint, query={})
       # puts endpoint
       @client = client
       @endpoint = endpoint
+
+      @query = (normalize_query(query) if query && !query.empty?)
     end
 
+    # Delegates the actual HTTP work to the client
     def fetch
-      response = Typhoeus::Request.new(
-        endpoint,
-        headers: { 
-          api_key: @client.headers[:api_key], 
-          access_token: @client.headers[:access_token],
-          accept_encoding: "gzip" }
-      ).run
+      client.fetch(self)
+    end
 
-      Response.new(response.body)
+    private
+
+    def normalize_query(query)
+      Hash[
+        query.map do |key, value|
+          [
+            key.to_sym,
+            value.is_a?(::Array) ? value.join(',') : value
+          ]
+        end
+      ]
     end
     
   end
