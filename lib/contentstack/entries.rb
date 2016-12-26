@@ -8,11 +8,12 @@ module Contentstack
       
     def initialize(body)
       @body = body
-      @entries = body.map { |entry| Entry.new(entry) }
     end
 
     def each(&block)
-      entries.each(&block)
+      @body.each do |entry| 
+        block.call(Entry.new(entry))
+      end
     end
   end
 end
