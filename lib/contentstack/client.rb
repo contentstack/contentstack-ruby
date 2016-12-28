@@ -72,10 +72,9 @@ module Contentstack
     # @return [Contentstack::Response]
     # @example
     #   entries = client.entries(content_type: 'shirts')
-    def entries(content_type:, query: {})
+    def entries(content_type:, params:{})
       set_content_type(content_type.to_s)
-      # normalize_select!(query) if query
-      Request.new(self, endpoint(resource: :entries), query).fetch.entries
+      request = Request.new(self, endpoint(resource: :entries), params).fetch.entries
     end
 
     def content_types
@@ -149,13 +148,16 @@ module Contentstack
     end
 
     def fetch(request)
-      response = Typhoeus::Request.new(
+      # puts "endpoint is #{request.endpoint}"
+      full_request = Typhoeus::Request.new(
         request.endpoint,
         headers: { 
           api_key: headers[:api_key], 
           access_token: headers[:access_token],
           accept_encoding: "gzip" }
-      ).run
+      )
+
+      response = full_request.run
 
       Response.new(response.body)
     end
