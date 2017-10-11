@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.email = ["rubygems@contentstack.com"]
 
   s.license = "MIT"
+  s.homepage = "https://github.com/builtio-contentstack/contentstack-ruby"
 
   s.summary = %q{Contentstack Ruby client for the Content Delivery API}
   s.description = %q{Contentstack Ruby client for the Content Delivery API}
