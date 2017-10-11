@@ -13,13 +13,8 @@
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
-require 'webmock/rspec'
-WebMock.disable_net_connect!(allow_localhost: true)
-
 require 'simplecov'
 SimpleCov.start
-
-require 'contentstack'
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
@@ -105,42 +100,4 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
-
-  config.before(:each) do
-    stub_request(:get, /cdn.contentstack.io\/v3\/content_types/).
-      with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
-      to_return(:status => 200, :body => File.read(File.dirname(__FILE__) + '/fixtures/content_types.json'), :headers => {})
-
-    stub_request(:get, /cdn.contentstack.io\/v3\/assets/).
-      with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
-      to_return(:status => 200, :body => File.read(File.dirname(__FILE__) + '/fixtures/asset_collection.json'), :headers => {})
-
-    stub_request(:get, /cdn.contentstack.io\/v3\/assets\/blt3ca1a3470787ba63/).
-      with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
-      to_return(:status => 200, :body => File.read(File.dirname(__FILE__) + '/fixtures/asset.json'), :headers => {})
-
-    stub_request(:get, /cdn.contentstack.io\/v3\/content_types\/product\/entries/).
-      with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
-      to_return(:status => 200, :body => File.read(File.dirname(__FILE__) + '/fixtures/product_entry_collection.json'), :headers => {})
-
-    stub_request(:get, /cdn.contentstack.io\/v3\/content_types\/product\/entries\/blt05056a2f5e0ebf76/).
-      with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
-      to_return(:status => 200, :body => File.read(File.dirname(__FILE__) + '/fixtures/product_entry.json'), :headers => {})
-
-    stub_request(:get, /cdn.contentstack.io\/v3\/content_types\/category\/entries/).
-      with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
-      to_return(:status => 200, :body => File.read(File.dirname(__FILE__) + '/fixtures/category_entry_collection_without_count.json'), :headers => {})
-
-    stub_request(:get, /cdn.contentstack.io\/v3\/content_types\/category\/entries.*include_count=true/).
-      with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
-      to_return(:status => 200, :body => File.read(File.dirname(__FILE__) + '/fixtures/category_entry_collection.json'), :headers => {})
-
-    stub_request(:get, /cdn.contentstack.io\/v3\/content_types\/category\/entries\/blt05056a2f5e0ebf76/).
-      with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
-      to_return(:status => 200, :body => File.read(File.dirname(__FILE__) + '/fixtures/category_entry.json'), :headers => {})
-  end
-
-  def create_client(access_token = ENV['ACCESS_TOKEN'], api_key = ENV['API_KEY'], environment = ENV['STACK_ENV'])
-    Contentstack::Client.new(access_token, api_key, environment)
-  end
 end
