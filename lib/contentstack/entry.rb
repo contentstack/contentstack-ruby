@@ -1,27 +1,27 @@
-
-
 module Contentstack
   class Entry
-
-    attr_reader :properties, :attributes
-    
-    def initialize(attributes)
-      @attributes = attributes
-      @properties = attributes.keys
-
-      properties.each do |prop|
-        define_singleton_method prop do
-          @attributes[prop]
-        end
-      end
+    attr_reader :fields, :content_type, :uid, :owner
+    def initialize(attrs, content_type_uid=nil)
+      setup(attrs, content_type_uid)
     end
 
-    def to_s
-      "#{attributes[:title]} created on #{attributes[:created_at]}"
+    def fetch
+      entry = API.fetch_entry(@content_type, self.fields[:uid])
+      setup(entry["entry"])
+      self
     end
 
-    def is_entry?
-      true
+    def get(field_uid)
+      raise Contentstack::Error("Please send a valid Field UID") if field_uid.class != String
+      @fields[field_uid.to_sym]
+    end
+
+    private
+    def setup(attrs, content_type_uid=nil)
+      @fields       = attrs.symbolize_keys
+      @content_type = content_type_uid if !content_type_uid.blank?
+      @owner        = attrs[:_owner] if attrs[:_owner]
+      @uid          = attrs[:uid]
     end
   end
 end

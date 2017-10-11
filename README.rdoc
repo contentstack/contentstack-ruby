@@ -1,0 +1,61 @@
+= Contentstack Ruby SDK
+
+<i>Use Built.io Contentstack to power content for your Ruby projects</i>
+
+Create Ruby based applications and use the Ruby SDK to fetch and deliver content from Built.io Contentstack. The SDK uses Content Delivery APIs.
+
+== Getting Started
+
+This guide will help you get started with our Ruby SDK to build apps powered by Built.io Contentstack.
+
+=== SDK Installation and Setup
+
+To use the Ruby SDK, download it using the gem install command
+
+  $ gem install contentstack
+
+=== Initialize SDK
+
+You will need to specify the API key, Access token, and Environment Name of your stack to initialize the SDK:
+
+  @stack = Contentstack::Client.new("site_api_key", "access_token", "enviroment_name")
+
+Once you have initialized the SDK, you can start getting content in your app.
+
+=== Basic Queries
+
+==== Get a Single Entry
+
+To get a single entry, you need to specify the content type as well as the uid of the entry.
+
+  entry = @stack.content_type('content_type_uid').entry("entry_uid").fetch
+  puts entry.get('title') # Use `get` method to retrieve field value by providing a field's unique ID
+
+==== Get Multiple Entries
+
+To retrieve multiple entries of a content type, you need to specify the content type uid. You can also specify search parameters to filter results.
+
+  @query = @stack.content_type('blog').query
+  @entries = @query.where('title', 'welcome')
+                   .include_schema
+                   .include_count
+                   .fetch
+
+  puts "Total Entries -- #{@entries.count}"
+  @entries.each{|entry| puts "#{entry.get('title')}" }
+
+
+== API Reference
+
+Go through our SDK API Reference guide to know about the methods that can be used to query your content in Built.io Contentstack.
+
+{Read Ruby SDK API Reference Guide}[/docs/Contentstack]
+
+
+== Example Apps
+
+To help you get started, we have created some sample applications that are powered by Built.io Contentstack Ruby SDK. Click on any of the links below to read the tutorials of the app, view app demo, or download the code from GitHub. 
+
+{Product Catalog}[#]
+
+Built.io Contentstack provides Ruby SDK using which you can create applications based on Ruby, or any other web frameworks created using Ruby.
