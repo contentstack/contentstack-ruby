@@ -49,13 +49,13 @@ To retrieve multiple entries of a content type, you need to specify the content 
 
 Go through our SDK API Reference guide to know about the methods that can be used to query your content in Built.io Contentstack.
 
-{Read Ruby SDK API Reference Guide}[http://www.rubydoc.info/gems/contentstack/0.0.1]
+{Read Ruby SDK API Reference Guide}[http://www.rubydoc.info/gems/contentstack]
 
 
 == Example Apps
 
 To help you get started, we have created some sample applications that are powered by Built.io Contentstack Ruby SDK. Click on any of the links below to read the tutorials of the app, view app demo, or download the code from GitHub. 
 
-{Product Catalog}[#]
+{Product Catalog}[https://github.com/builtio-contentstack/contentstack-rails-example-app]
 
 Built.io Contentstack provides Ruby SDK using which you can create applications based on Ruby, or any other web frameworks created using Ruby.
