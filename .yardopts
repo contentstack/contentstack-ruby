@@ -1,0 +1,6 @@
+README.rdoc
+lib/contentstack/*
+lib/contentstack.rb
+--exclude lib/contentstack/util.rb
+--exclude lib/contentstack/api.rb
+--exclude lib/contentstack/version.rb
