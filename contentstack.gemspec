@@ -11,8 +11,8 @@ Gem::Specification.new do |s|
 
   s.license = "MIT"
 
-  s.summary = %q{A ruby gem to work with Contentstack}
-  s.description = %q{A ruby gem to work with the Content Delivery API for contentstack}
+  s.summary = %q{Contentstack Ruby client for the Content Delivery API}
+  s.description = %q{Contentstack Ruby client for the Content Delivery API}
 
   s.files = `git ls-files`.split("\n")
   s.require_paths = ["lib"]
