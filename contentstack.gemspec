@@ -9,6 +9,8 @@ Gem::Specification.new do |s|
   s.authors = [%q{Rohit Sharma}]
   s.email = ["rubygems@contentstack.com"]
 
+  s.required_ruby_version = '>= 2.0'
+
   s.license = "MIT"
   s.homepage = "https://github.com/builtio-contentstack/contentstack-ruby"
 
