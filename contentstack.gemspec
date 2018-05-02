@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
   s.name = %q{contentstack}
   s.version = Contentstack::VERSION.dup
   s.date = Time.now
-  s.authors = [%q{Rohit Sharma}]
-  s.email = ["rubygems@contentstack.com"]
+  s.authors = [%q{Contentstack}]
+  s.email = ["support@contentstack.com"]
 
   s.required_ruby_version = '>= 2.0'
 
