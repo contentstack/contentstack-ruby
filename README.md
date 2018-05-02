@@ -1,153 +1,100 @@
-[![Built.io Contentstack](https://contentstackdocs.built.io/static/images/logo.png)](https://www.built.io/products/contentstack/overview)
+# **Ruby SDK for Contentstack**
 
-# Ruby SDK for Built.io andContentstack
+Contentstack is a headless CMS with an API-first approach. It is a CMS that developers can use to build powerful cross-platform applications in their favorite languages. Build your application frontend, and Contentstack will take care of the rest. [Read More](https://www.contentstack.com/). 
 
-Ruby client for [built.io](https://www.built.io)'s [Contentstack](https://www.built.io/products/contentstack/overview)  - the API-first CMS for your app. This SDK interacts only with the [Content Delivery Rest API](https://contentstackdocs.built.io/developer/restapi).
+Contentstack provides Ruby SDK to build application on top of Ruby on Rails. Given below is the detailed guide and helpful resources to get started with our Ruby SDK.
 
-Contentstack is the CMS without the BS. With this headless cms, developers can build powerful cross-platform applications using their favorite front-end javascript frameworks and Android/iOS clients. 
+## **Prerequisite**
 
-You build your front-end and we will take care of delivering content through APIs, optimized for each destination. - [more here](https://www.built.io/products/contentstack/overview) 
+You need ruby v2.0 or later installed to use the Contentstack Ruby SDK.
 
-##### [TODOS]
+## **Setup and Installation**
 
-[-] sign up link missing
-[-] add logos for react, angular, iOS and Android
+Add the following code to your application's Gemfile and bundle:
 
-## Prerequisite
-You only need ruby v2.0 or later installed to use the Built.io Contentstack SDK.
-
-## Setup and Installation
-Add this to your application's Gemfile and `bundle`:
-
-```bash
-gem 'contentstack'
-```
+    gem 'contentstack'
 
 Or you can run this command in your terminal (you might need administrator privileges to perform this installation):
 
-```ruby
-gem install contentstack
-```
+    gem install contentstack
 
-To start using the SDK in your application, you will need to initialize the stack by providing the required keys and values associated with them.
+To start using the SDK in your application, you will need to initialize the stack by providing the values for the keys given in the code snippet below.
 
-```ruby
-client = Contentstack::Client.new(
-  api_key: ''
-  access_token: 'b4c0n73nExample',
-  environment: ''
-)
-```
+    client = Contentstack::Client.new("site_api_key", "access_token", "enviroment_name")
 
-##### [TODOS]
-[-] Add a DSL for easier more idiomatic configuration
+## **Key Concepts for using Contentstack**
 
+### **Stack**
 
-## Key Concepts for using Contentstack
+A stack is like a container that holds the content of your app. Learn more about [stacks](https://www.contentstack.com/docs/guide/stack).
 
-### Stack
-A stack is like a container that holds the content of your app. Learn more about creating stacks. [watch videos tutorials with documentation](https://contentstackdocs.built.io/developer/javascript/quickstart)
+### **Content Type**
 
-### Content Type
+Content type lets you define the structure or blueprint of a page or a section of your digital property. It is a form-like page that gives Content Managers an interface to input and upload content. [Read more](https://www.contentstack.com/docs/guide/content-types). 
 
-A content type is the structure of a section with one or more fields within it. It is a form-like page that gives Content Managers an interface to input and upload content. 
+### **Entry**
 
-### Entry
+An entry is the actual piece of content created using one of the defined content types. Learn more about [Entries](https://www.contentstack.com/docs/guide/content-management#working-with-entries). 
 
-An entry is the actual piece of content created using one of the defined content types. 
+### **Asset**
 
-### Asset
+Assets refer to all the media files (images, videos, PDFs, audio files, and so on) uploaded to Contentstack. These files can be used in multiple entries. Read more about [Assets](https://www.contentstack.com/docs/guide/content-management#working-with-assets). 
 
-Assets refer to all the media files (images, videos, PDFs, audio files, and so on) uploaded to Built.io Contentstack. These files can be used in multiple entries.  
+### **Environment**
 
-### Environment
+A publishing environment corresponds to one or more deployment servers or a content delivery destination where the entries need to be published. Learn how to work with [Environments](https://www.contentstack.com/docs/guide/environments). 
 
-A publishing environment corresponds to one or more deployment servers or a content delivery destination where the entries need to be published. 
+## **Contentstack Ruby SDK: 5-minute Quickstart**
 
+### **Initializing your SDK **
 
-## 5 minute Quickstart
+To initialize the SDK, you need to provide values for the keys given in the snippet below:
 
-### Initializing your Stack client
-To initialize a Stack client, you need to provide the required keys and values associated with them:
+    stack = Contentstack::Client.new("site_api_key", "access_token", "enviroment_name")
 
-```ruby
-stack = Contentstack::Client.new(
-  api_key: ''
-  access_token: 'b4c0n73nExample',
-  environment: ''
-)
-```
+To get the API credentials mentioned above, log in to your Contentstack account and then in your top panel navigation, go to Settings > Stack to view the API Key and Access Token.
 
-To get the api credentials mentioned above, you need to log into your Contentstack account and then in your top panel navigation, go to Settings -> Stack to view both your `API Key` and your `Access Token`
+### **Querying content from your stack**
 
+To fetch all entries of of a content type, use the query given below:
 
-The `stack` object that is returned a Built.io Contentstack client object, which can be used to initialize different modules and make queries against our [Content Delivery API](https://contentstackdocs.built.io/rest/api/content-delivery-api/). The initialization process for each module is explained below.
+    entry = stack.content_type(<<CONTENT_TYPE_UID>>).query();
 
+To fetch a specific entry from a content type, use the following query:
 
-### Querying content from your stack
+    entry = stack.content_type(<<CONTENT_TYPE_UID>>).entry(<<ENTRY_UID>>);
 
-Let us take an example where we try to obtain all entries of the Content Type my_content_type.
+## **Advanced Queries**
 
-```ruby
-entry = stack.content_type(<<CONTENT_TYPE_UID>>).query();
-```
+You can query for content types, entries, assets and more using our Ruby API Reference. 
 
-##### [TODOS]
+[Ruby API Reference Doc](http://www.rubydoc.info/gems/contentstack)
 
-[-] Where to get your content type and content type uid from
-[-] Describe what a preview of the returned `entry` object will look like
+## **Working with Images**
 
+We have introduced Image Delivery APIs that let you retrieve images and then manipulate and optimize them for your digital properties. It lets you perform a host of other actions such as crop, trim, resize, rotate, overlay, and so on. 
 
-Let us take another example where we try to obtain only a specific entry from the Content Type `my_content_type`.
+For example, if you want to crop an image (with width as 300 and height as 400), you simply need to append query parameters at the end of the image URL, such as, https://images.contentstack.io/v3/assets/blteae40eb499811073/bltc5064f36b5855343/59e0c41ac0eddd140d5a8e3e/download?crop=300,400. There are several more parameters that you can use for your images. 
 
-```ruby
-entry = stack.content_type(<<CONTENT_TYPE_UID>>).entry(<<ENTRY_UID>>);
-```
+[Read Image Delivery API documentation](https://www.contentstack.com/docs/apis/image-delivery-api/). 
 
-#### [Todos]
-[-] Describe what a preview of the returned `entry` object will look like
+SDK functions for Image Delivery API coming soon. 
 
+## **Helpful Links**
 
-## More Usage
+* [Contentstack Website](https://www.contentstack.com)
 
-You can query for content types, entries, assets and more using our completely documented api. Here are some useful examples:
+* [Official Documentation](http://contentstack.com/docs)
 
-This is how you get all the `ContentTypes` in your stack:
+* [Content Delivery API Docs](https://contentstack.com/docs/apis/content-delivery-api/)
 
-```ruby
-content_types = stack.content_types
-```
+## **The MIT License (MIT)**
 
-Get a specific `ContentType` by `content_type_uid`
-
-```ruby
-blog_entries = stack.content_type('blog');
-```
-
-Get a specific `Entry` by `entry_uid`
-
-```ruby
-blog_entry = stack.content_type('blog').entry('blt1234567890abcef')
-```
-
-Fetch all entries of requested `content_type`
-
-
-## Next steps
-
-- [Online Query Guide](https://contentstackdocs.built.io/developer/javascript/query-guide)
-- [Online API Reference (ruby examples coming soon)](https://contentstackdocs.built.io/js/api/)
-
-## Links
- - [Website](https://www.built.io/products/contentstack/overview)
- - [Official Documentation](http://contentstackdocs.built.io/developer/javascript/quickstart)
- - [Content Delivery Rest API](https://contentstackdocs.built.io/developer/restapi)
-
-## The MIT License (MIT)
-Copyright © 2012-2016 [Built.io](https://www.built.io/). All Rights Reserved
+Copyright © 2012-2017 [Built.io](https://www.built.io/). All Rights Reserved
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
