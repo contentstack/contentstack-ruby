@@ -370,6 +370,20 @@ module Contentstack
       self
     end
 
+    # Get entries from the specified locale. 
+    #
+    # @param [String] code The locale code of the entry
+    #
+    # Example
+    #    @query = @stack.content_type('category').query
+    #    @query.locale('en-us')
+    #
+    # @return [Contentstack::Query]
+    def locale(code)
+      @query[:locale] = code
+      self
+    end
+
     # Specifies an array of 'only' keys in BASE object that would be 'included' in the response.
     #
     # @param [Array] fields Array of the 'only' reference keys to be included in response.

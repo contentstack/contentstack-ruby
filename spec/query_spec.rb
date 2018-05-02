@@ -185,4 +185,9 @@ describe Contentstack::Query do
     data = category_query.or([q1,q2]).fetch
     expect(data.length).to eq 5
   end
+
+  it "should set locale the in the request query" do
+    data =  product_query.locale('en-us')
+    expect(data.query[:locale]).to eq 'en-us'
+  end
 end
