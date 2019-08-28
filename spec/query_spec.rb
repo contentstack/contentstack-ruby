@@ -54,7 +54,7 @@ describe Contentstack::Query do
   it "should get data using `include_count` method" do
     data = category_query.include_count.fetch
     expect(data.count).not_to be nil
-    expect(data.count.class).to be Integer
+    expect(data.count).to eq 5
   end
 
   it "should get data using `only` method with string parameter" do
