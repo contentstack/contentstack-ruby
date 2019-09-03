@@ -6,8 +6,8 @@ require 'open-uri'
 
 module Contentstack
   class API
-    def self.init_api(api_key, access_token, environment)
-      @host = "https://cdn.contentstack.io"
+    def self.init_api(api_key, access_token, environment,host)
+      @host = host
       @api_version = '/v3'
       @environment = environment
       @headers = {api_key: api_key, access_token: access_token, user_agent: "ruby-sdk/#{Contentstack::VERSION}", environment: @environment}
@@ -43,7 +43,6 @@ module Contentstack
       q ||= {}
 
       q.merge!(@headers)
-      q.merge!({timestamp: Time.now.to_i})
 
       query = "?" + q.to_query
       # puts "Request URL:- #{@host}#{@api_version}#{path}#{query} \n\n"
