@@ -3,6 +3,8 @@ require_relative '../lib/contentstack.rb'
 
 describe Contentstack::ContentType do
   let(:client) { create_client }
+  let(:eu_client) { create_client('ACCESS_TOKEN', 'API_KEY', 'STACK_ENV', {region: Contentstack::Region::EU}) }
+  let(:custom_host_client) { create_client('ACCESS_TOKEN', 'API_KEY', 'STACK_ENV', {host: "https://custom-cdn.contentstack.com"}) }
 
   describe "Fetch data from API" do
     it "has class as Contentstack::ContentType" do
@@ -12,6 +14,16 @@ describe Contentstack::ContentType do
 
     it "has method called title with data" do
       @data = client.content_types.first
+      expect(@data.title).not_to be nil
+    end
+    
+    it "has method called title with data from eu" do
+      @data = eu_client.content_types.first
+      expect(@data.title).not_to be nil
+    end
+
+    it "has method called title with data from custom client" do
+      @data = custom_host_client.content_types.first
       expect(@data.title).not_to be nil
     end
 

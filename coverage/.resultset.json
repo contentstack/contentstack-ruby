@@ -1,12 +1,17 @@
 {
   "RSpec": {
     "coverage": {
-      "/home/keval/ruby/sdk/contentstack-ruby/lib/contentstack.rb": [
+      "/Users/kevalgohil/contentstack-ruby/lib/contentstack.rb": [
         1,
         null,
         1,
         1,
         1,
+        1,
+        null,
+        null,
+        null,
+        null,
         null,
         null,
         null,
@@ -23,26 +28,29 @@
         1,
         null
       ],
-      "/home/keval/ruby/sdk/contentstack-ruby/lib/contentstack/version.rb": [
+      "/Users/kevalgohil/contentstack-ruby/lib/contentstack/version.rb": [
         1,
         1,
         null
       ],
-      "/home/keval/ruby/sdk/contentstack-ruby/lib/contentstack/client.rb": [
+      "/Users/kevalgohil/contentstack-ruby/lib/contentstack/client.rb": [
         1,
         1,
         1,
         null,
         1,
         1,
+        1,
         null,
         1,
-        59,
+        64,
+        64,
+        64,
         null,
         null,
         null,
         1,
-        6,
+        8,
         null,
         null,
         1,
@@ -57,9 +65,20 @@
         7,
         null,
         null,
+        1,
+        1,
+        62,
+        null,
+        60,
+        null,
+        2,
+        null,
+        62,
+        null,
+        null,
         null
       ],
-      "/home/keval/ruby/sdk/contentstack-ruby/lib/contentstack/api.rb": [
+      "/Users/kevalgohil/contentstack-ruby/lib/contentstack/api.rb": [
         1,
         1,
         1,
@@ -69,19 +88,19 @@
         1,
         1,
         1,
-        59,
-        59,
-        59,
-        59,
+        64,
+        64,
+        64,
+        64,
         null,
         null,
         1,
-        6,
+        8,
         0,
         null,
-        6,
+        8,
         null,
-        6,
+        8,
         null,
         null,
         1,
@@ -102,20 +121,19 @@
         null,
         1,
         1,
-        64,
+        66,
         null,
-        64,
-        64,
+        66,
         null,
-        64,
+        66,
         null,
         null,
-        64,
+        66,
         null,
         null,
         null
       ],
-      "/home/keval/ruby/sdk/contentstack-ruby/lib/contentstack/content_type.rb": [
+      "/Users/kevalgohil/contentstack-ruby/lib/contentstack/content_type.rb": [
         1,
         null,
         1,
@@ -137,13 +155,13 @@
         null,
         null,
         2,
-        62,
+        64,
         null,
         null,
         null,
         null,
         1,
-        71,
+        75,
         null,
         null,
         1,
@@ -156,9 +174,9 @@
         null,
         null,
         1,
-        6,
-        6,
-        168,
+        8,
+        8,
+        224,
         null,
         null,
         null,
@@ -169,7 +187,7 @@
         null,
         null
       ],
-      "/home/keval/ruby/sdk/contentstack-ruby/lib/contentstack/query.rb": [
+      "/Users/kevalgohil/contentstack-ruby/lib/contentstack/query.rb": [
         1,
         null,
         1,
@@ -774,7 +792,7 @@
         null,
         null
       ],
-      "/home/keval/ruby/sdk/contentstack-ruby/lib/contentstack/entry_collection.rb": [
+      "/Users/kevalgohil/contentstack-ruby/lib/contentstack/entry_collection.rb": [
         1,
         null,
         1,
@@ -819,7 +837,7 @@
         null,
         null
       ],
-      "/home/keval/ruby/sdk/contentstack-ruby/lib/contentstack/entry.rb": [
+      "/Users/kevalgohil/contentstack-ruby/lib/contentstack/entry.rb": [
         1,
         1,
         1,
@@ -848,7 +866,7 @@
         null,
         null
       ],
-      "/home/keval/ruby/sdk/contentstack-ruby/lib/contentstack/asset_collection.rb": [
+      "/Users/kevalgohil/contentstack-ruby/lib/contentstack/asset_collection.rb": [
         1,
         null,
         1,
@@ -876,7 +894,7 @@
         null,
         null
       ],
-      "/home/keval/ruby/sdk/contentstack-ruby/lib/contentstack/asset.rb": [
+      "/Users/kevalgohil/contentstack-ruby/lib/contentstack/asset.rb": [
         1,
         null,
         null,
@@ -945,24 +963,32 @@
         null,
         null
       ],
-      "/home/keval/ruby/sdk/contentstack-ruby/lib/util.rb": [
+      "/Users/kevalgohil/contentstack-ruby/lib/contentstack/region.rb": [
+        1,
+        1,
         1,
         1,
         null,
-        577,
-        70,
+        null
+      ],
+      "/Users/kevalgohil/contentstack-ruby/lib/util.rb": [
+        1,
+        1,
+        null,
+        521,
+        72,
         null,
         null,
         1,
-        2942,
-        2942,
-        15210,
-        3020,
+        3056,
+        3056,
+        15692,
+        3118,
         null,
-        12190,
+        12574,
         null,
         null,
-        2942,
+        3056,
         null,
         null,
         null,
@@ -973,9 +999,9 @@
         null,
         null,
         1,
-        1222,
-        967,
-        761,
+        1250,
+        1007,
+        801,
         null,
         206,
         null,
@@ -985,12 +1011,12 @@
         null,
         1,
         1,
-        362,
-        362,
+        370,
+        370,
         null,
         null,
         1,
-        373,
+        381,
         null,
         null,
         null,
@@ -1000,7 +1026,7 @@
         null,
         null,
         1,
-        561,
+        505,
         null,
         null,
         null,
@@ -1040,7 +1066,7 @@
         null,
         null,
         1,
-        159,
+        95,
         null,
         null,
         null,
@@ -1054,7 +1080,7 @@
         null,
         null
       ],
-      "/home/keval/ruby/sdk/contentstack-ruby/spec/asset_spec.rb": [
+      "/Users/kevalgohil/contentstack-ruby/spec/asset_spec.rb": [
         1,
         1,
         null,
@@ -1104,14 +1130,26 @@
         null,
         null
       ],
-      "/home/keval/ruby/sdk/contentstack-ruby/spec/content_type_spec.rb": [
+      "/Users/kevalgohil/contentstack-ruby/spec/content_type_spec.rb": [
         1,
         1,
         null,
         1,
         7,
+        2,
+        2,
         null,
         1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        1,
+        1,
+        null,
+        null,
         1,
         1,
         1,
@@ -1170,19 +1208,41 @@
         null,
         null
       ],
-      "/home/keval/ruby/sdk/contentstack-ruby/spec/contentstack_spec.rb": [
+      "/Users/kevalgohil/contentstack-ruby/spec/contentstack_spec.rb": [
         1,
         1,
         null,
         1,
-        1,
+        2,
+        2,
+        2,
         null,
         1,
         1,
+        null,
+        null,
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        1,
+        null,
         null,
         null
       ],
-      "/home/keval/ruby/sdk/contentstack-ruby/spec/entry_collection_spec.rb": [
+      "/Users/kevalgohil/contentstack-ruby/spec/entry_collection_spec.rb": [
         1,
         1,
         null,
@@ -1226,7 +1286,7 @@
         null,
         null
       ],
-      "/home/keval/ruby/sdk/contentstack-ruby/spec/entry_spec.rb": [
+      "/Users/kevalgohil/contentstack-ruby/spec/entry_spec.rb": [
         1,
         1,
         null,
@@ -1251,7 +1311,7 @@
         null,
         null
       ],
-      "/home/keval/ruby/sdk/contentstack-ruby/spec/query_spec.rb": [
+      "/Users/kevalgohil/contentstack-ruby/spec/query_spec.rb": [
         1,
         1,
         null,
@@ -1447,6 +1507,6 @@
         null
       ]
     },
-    "timestamp": 1525251776
+    "timestamp": 1566976586
   }
 }
