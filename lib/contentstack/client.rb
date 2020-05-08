@@ -5,11 +5,11 @@ require 'contentstack/asset_collection'
 module Contentstack
   class Client
     attr_reader :region, :host
-    # Initialize "Built.io Contentstack" Client instance
-    def initialize(api_key, access_token, environment, options={})
+    # Initialize "Contentstack" Client instance
+    def initialize(api_key, delivery_token, environment, options={})
       @region = options[:region].nil? ? Contentstack::Region::US : options[:region]
       @host = options[:host].nil? ? get_default_region_hosts(@region) : options[:host]
-      API.init_api(api_key, access_token, environment,  @host)
+      API.init_api(api_key, delivery_token, environment,  @host)
     end
 
     

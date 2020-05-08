@@ -22,13 +22,13 @@ Or you can run this command in your terminal (you might need administrator privi
 To start using the SDK in your application, you will need to initialize the stack by providing the values for the keys given in the code snippet below.
 
     # with default region
-    client = Contentstack::Client.new("site_api_key", "access_token", "enviroment_name")
+    client = Contentstack::Client.new("site_api_key", "delivery_token", "enviroment_name")
     
     # with specific region
-    client = Contentstack::Client.new("site_api_key", "access_token", "enviroment_name",{"region": Contentstack::Region::EU})
+    client = Contentstack::Client.new("site_api_key", "delivery_token", "enviroment_name",{"region": Contentstack::Region::EU})
     
     # with custom host
-    client = Contentstack::Client.new("site_api_key", "access_token", "enviroment_name",{"host": "https://custom-cdn.contentstack.com"})
+    client = Contentstack::Client.new("site_api_key", "delivery_token", "enviroment_name",{"host": "https://custom-cdn.contentstack.com"})
 
 
 
@@ -61,7 +61,7 @@ A publishing environment corresponds to one or more deployment servers or a cont
 
 To initialize the SDK, you need to provide values for the keys given in the snippet below:
 
-    stack = Contentstack::Client.new("site_api_key", "access_token", "enviroment_name")
+    stack = Contentstack::Client.new("site_api_key", "delivery_token", "enviroment_name")
 
 To get the API credentials mentioned above, log in to your Contentstack account and then in your top panel navigation, go to Settings > Stack to view the API Key and Access Token.
 

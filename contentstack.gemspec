@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.0'
 
   s.license = "MIT"
-  s.homepage = "https://github.com/builtio-contentstack/contentstack-ruby"
+  s.homepage = "https://github.com/contentstack/contentstack-ruby"
 
   s.summary = %q{Contentstack Ruby client for the Content Delivery API}
   s.description = %q{Contentstack Ruby client for the Content Delivery API}
