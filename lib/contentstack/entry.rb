@@ -1,3 +1,5 @@
+require 'active_support/core_ext'
+
 module Contentstack
   class Entry
     attr_reader :fields, :content_type, :uid, :owner
