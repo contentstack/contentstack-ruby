@@ -148,7 +148,7 @@ RSpec.configure do |config|
       to_return(:status => 200, :body => File.read(File.dirname(__FILE__) + '/fixtures/category_entry.json'), :headers => {})
   end
 
-  def create_client(access_token = ENV['ACCESS_TOKEN'], api_key = ENV['API_KEY'], environment = ENV['STACK_ENV'], options = {})
-    Contentstack::Client.new(access_token, api_key, environment, options)
+  def create_client(delivery_token = ENV['ACCESS_TOKEN'], api_key = ENV['API_KEY'], environment = ENV['STACK_ENV'], options = {})
+    Contentstack::Client.new(delivery_token, api_key, environment, options)
   end
 end

@@ -3,8 +3,8 @@ require_relative '../lib/contentstack.rb'
 
 describe Contentstack do
   let(:client) { create_client }
-  let(:eu_client) { create_client('ACCESS_TOKEN', 'API_KEY', 'STACK_ENV', {region: Contentstack::Region::EU}) }
-  let(:custom_host_client) { create_client('ACCESS_TOKEN', 'API_KEY', 'STACK_ENV', {host: "https://custom-cdn.contentstack.com"}) }
+  let(:eu_client) { create_client('DELIVERY_TOKEN_TOKEN', 'API_KEY', 'STACK_ENV', {region: Contentstack::Region::EU}) }
+  let(:custom_host_client) { create_client('DELIVERY_TOKEN_TOKEN', 'API_KEY', 'STACK_ENV', {host: "https://custom-cdn.contentstack.com"}) }
 
   it "has a version number" do
     expect(Contentstack::VERSION).not_to be nil
