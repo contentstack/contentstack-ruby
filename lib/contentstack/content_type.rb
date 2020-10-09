@@ -44,7 +44,7 @@ module Contentstack
       end
     end
 
-    def self.find_by_uid(uid)
+    def fetch
       content_type = API.fetch_content_types(uid)["content_type"]
       ContentType.new(content_type.inject({}){|clone,(k,v)| clone[k.to_sym] = v; clone})
     end

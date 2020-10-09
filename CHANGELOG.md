@@ -1,6 +1,25 @@
 ## CHANGELOG
 ------------------------------------------------
 
+## Version 0.2.0
+
+ ### New Features
+  - Entry 
+    - locale - function for passing locale is added
+    - only - function for getting only specified field
+    - except - function for getting field except specified field
+    - include_reference - function for including reference in entry
+    - include_schema - function for including schema along with entry added
+    - include_content_type - function for including content type details along with entry added
+    - include_owner - function for getting owner of entry
+    - include_fallback - function for getting published fallback locale content, if specified locale content is not published
+
+  - Query 
+    - include_fallback - function for getting published fallback locale content, if specified locale content is not published
+
+
+------------------------------------------------
+
 ## Version 0.1.0
 
  ### Bug
