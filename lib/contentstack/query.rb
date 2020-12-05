@@ -502,6 +502,20 @@ module Contentstack
       self
     end
 
+
+    # Include the fallback locale publish content, if specified locale content is not publish.
+    #
+    # Example
+    #
+    #    @query = @stack.content_type('product').query
+    #    @query.include_fallback
+    #
+    # @return [Contentstack::Query]
+    def include_fallback(flag=true)
+      @query[:include_fallback] = flag
+      self
+    end
+
     # Include objects in 'Draft' mode in response
     #
     # Example
