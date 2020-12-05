@@ -29,9 +29,9 @@ module Contentstack
       send_request(path, query)
     end
 
-    def self.fetch_entry(content_type, entry_uid)
+    def self.fetch_entry(content_type, entry_uid, query)
       path = "/content_types/#{content_type}/entries/#{entry_uid}"
-      send_request(path)
+      send_request(path, query)
     end
 
     def self.get_assets(asset_uid=nil)

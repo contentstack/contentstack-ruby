@@ -147,6 +147,11 @@ describe Contentstack::Query do
     expect(data.first.fields[:_owner]).not_to be nil
   end
   
+  it "should get data using `include_owner` method" do
+    data = product_query.include_fallback.fetch
+    expect(data.first.fields[:locale]).not_to be nil
+  end
+
   it "should get data using `include_draft` method" do
     data = category_query.include_draft.fetch
     expect(data.length).to eq 5

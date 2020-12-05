@@ -46,6 +46,11 @@ describe Contentstack::ContentType do
       @data = client.content_types.first
       expect(@data.attributes).not_to be nil
     end
+
+    it "Should get content type from uid" do
+      @data = client.content_type("category").fetch
+      expect(@data.attributes).not_to be nil
+    end
   end
 
   describe "Initialized using class" do

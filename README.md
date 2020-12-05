@@ -1,4 +1,3 @@
-
 # **Ruby SDK for Contentstack**
 
 Contentstack is a headless CMS with an API-first approach. It is a CMS that developers can use to build powerful cross-platform applications in their favorite languages. Build your application frontend, and Contentstack will take care of the rest. [Read More](https://www.contentstack.com/). 
@@ -22,16 +21,13 @@ Or you can run this command in your terminal (you might need administrator privi
 To start using the SDK in your application, you will need to initialize the stack by providing the values for the keys given in the code snippet below.
 
     # with default region
-    client = Contentstack::Client.new("site_api_key", "delivery_token", "enviroment_name")
+    client = Contentstack::Client.new("api_key", "delivery_token", "enviroment_name")
     
     # with specific region
-    client = Contentstack::Client.new("site_api_key", "delivery_token", "enviroment_name",{"region": Contentstack::Region::EU})
+    client = Contentstack::Client.new("api_key", "delivery_token", "enviroment_name",{"region": Contentstack::Region::EU})
     
     # with custom host
-    client = Contentstack::Client.new("site_api_key", "delivery_token", "enviroment_name",{"host": "https://custom-cdn.contentstack.com"})
-
-
-
+    client = Contentstack::Client.new("api_key", "delivery_token", "enviroment_name",{"host": "https://custom-cdn.contentstack.com"})
 
 ## **Key Concepts for using Contentstack**
 
@@ -57,11 +53,11 @@ A publishing environment corresponds to one or more deployment servers or a cont
 
 ## **Contentstack Ruby SDK: 5-minute Quickstart**
 
-### **Initializing your SDK **
+### **Initializing your SDK**
 
 To initialize the SDK, you need to provide values for the keys given in the snippet below:
 
-    stack = Contentstack::Client.new("site_api_key", "delivery_token", "enviroment_name")
+    stack = Contentstack::Client.new("api_key", "delivery_token", "enviroment_name")
 
 To get the API credentials mentioned above, log in to your Contentstack account and then in your top panel navigation, go to Settings > Stack to view the API Key and Access Token.
 
@@ -75,11 +71,38 @@ To fetch a specific entry from a content type, use the following query:
 
     entry = stack.content_type(<<CONTENT_TYPE_UID>>).entry(<<ENTRY_UID>>);
 
+### Get Multiple Entries
+To retrieve multiple entries of a content type, specify the content type UID. You can also specify search parameters to filter results:
+
+    @query = @stack.content_type('blog').query
+    @entries = @query.where('title', 'welcome')
+                    .include_schema
+                    .include_count
+                    .fetch
+    puts "Total Entries -- #{@entries.count}"
+    @entries.each{|entry| puts "#{entry.get('title')}" }
+To retrieve localized versions of entries, you can use the query attribute:
+
+    entry = @stack.content_type('content_type_uid').query.locale('locale_code').fetch()
+
+> Note: Currently, the above query works in case of retrieving localized versions of multiple entries only.
+
 ## **Advanced Queries**
 
 You can query for content types, entries, assets and more using our Ruby API Reference. 
 
 [Ruby API Reference Doc](http://www.rubydoc.info/gems/contentstack)
+
+### Paginating Responses
+In a single instance, the [Get Multiple Entries](https://www.contentstack.com/docs/developers/ruby/get-started-with-ruby-sdk/#get-multiple-entries) query will retrieve only the first 100 items of the specified content type. You can paginate and retrieve the rest of the items in batches using the [skip](https://www.rubydoc.info/gems/contentstack/Contentstack/Query#skip-instance_method) and [limit](https://www.rubydoc.info/gems/contentstack/Contentstack/Query#limit-instance_method) parameters in subsequent requests.
+
+    @stack = Contentstack::Client.new("api_key", "delivery_token", "environment")
+    @entries = @stack.content_type('category').query
+                   .limit(20)
+                   .skip(50)
+                   .fetch
+
+> Note: Currently, the Ruby SDK does not support multiple content types referencing in a single query. For more information on how to query entries and assets, refer the Queries section of our Content Delivery API documentation.
 
 ## **Working with Images**
 

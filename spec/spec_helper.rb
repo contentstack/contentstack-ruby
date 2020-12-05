@@ -118,7 +118,11 @@ RSpec.configure do |config|
     stub_request(:get, /cdn.contentstack.io\/v3\/content_types/).
       with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
       to_return(:status => 200, :body => File.read(File.dirname(__FILE__) + '/fixtures/content_types.json'), :headers => {})
-
+    
+    stub_request(:get, /cdn.contentstack.io\/v3\/content_types\/category/).
+      with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
+      to_return(:status => 200, :body => File.read(File.dirname(__FILE__) + '/fixtures/category_content_type.json'), :headers => {})
+    
     stub_request(:get, /cdn.contentstack.io\/v3\/assets/).
       with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
       to_return(:status => 200, :body => File.read(File.dirname(__FILE__) + '/fixtures/asset_collection.json'), :headers => {})
