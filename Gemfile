@@ -6,3 +6,4 @@ gem "webmock"
 gem "simplecov"
 gem "activesupport"
 gem "yard"
+gem "contentstack_utils", path:'../contentstack-utils-ruby/'

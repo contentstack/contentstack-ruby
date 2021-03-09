@@ -8,3 +8,4 @@ coverage
 .DS_Store
 .bundle/
 */rspec_results.html
+/vendor/*
