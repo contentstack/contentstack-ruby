@@ -4,7 +4,6 @@ require_relative '../lib/contentstack.rb'
 describe Contentstack::Entry do
   let(:client) { create_client }
   let(:uid) { "blt05056a2f5e0ebf76" }
-
   let(:category) {client.content_type("category").entry(uid)}
   let(:product) {client.content_type("product").entry(uid)}
 
@@ -82,6 +81,12 @@ describe Contentstack::Entry do
   end
   
   it "should get data using `include_reference` method" do
+    data = product.include_reference('categories').fetch
+    puts data.get("categories.title")
+    expect(data.fields[:categories][0][:title]).not_to be nil
+  end
+
+  it "should get data using `include_embedded_items` method" do
     data = product.include_reference('categories').fetch
     puts data.get("categories.title")
     expect(data.fields[:categories][0][:title]).not_to be nil
