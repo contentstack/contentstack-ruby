@@ -150,9 +150,14 @@ RSpec.configure do |config|
     stub_request(:get, /cdn.contentstack.io\/v3\/content_types\/category\/entries\/blt05056a2f5e0ebf76/).
       with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
       to_return(:status => 200, :body => File.read(File.dirname(__FILE__) + '/fixtures/category_entry.json'), :headers => {})
+
+    stub_request(:get, /cdn.contentstack.io\/v3\/stacks\/sync/).
+      with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
+      to_return(:status => 200, :body => File.read(File.dirname(__FILE__) + '/fixtures/sync_init.json'), :headers => {})
+
   end
 
-  def create_client(delivery_token = ENV['ACCESS_TOKEN'], api_key = ENV['API_KEY'], environment = ENV['STACK_ENV'], options = {})
-    Contentstack::Client.new(delivery_token, api_key, environment, options)
+  def create_client(delivery_token = ENV['DELIVERY_TOKEN'], api_key = ENV['API_KEY'], environment = ENV['ENVIRONMENT'], options = {})
+    Contentstack::Client.new(api_key, delivery_token, environment, options)
   end
 end
