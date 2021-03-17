@@ -1,6 +1,12 @@
 ## CHANGELOG
 ------------------------------------------------
 
+## Version 0.3.0
+### Date: 17th-Mar-2021
+ ### New Features
+ - Sync API module support added
+
+ ------------------------------------------------
 ## Version 0.2.0
 
  ### New Features
