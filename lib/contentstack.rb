@@ -3,7 +3,7 @@ $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require "contentstack/version"
 require "contentstack/client"
 require "contentstack/region"
-require 'contentstack_utils'
+require "contentstack_utils"
 require "util"
 
 

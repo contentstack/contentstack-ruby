@@ -152,6 +152,19 @@ module Contentstack
       self
     end
 
+    # Include Embedded Objects (Entries and Assets) along with entry/entries details.
+    #
+    # Example
+    #
+    #    @entry = @stack.content_type('product').entry(entry_uid)
+    #    @entry.include_embedded_items
+    #
+    # @return [Contentstack::Query]
+    def include_embedded_items()
+      @query[:include_embedded_items] = ['BASE']
+      self
+    end
+
     #
     # @return [Contentstack::Query]
     def include(field_uids)
