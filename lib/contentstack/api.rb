@@ -40,6 +40,11 @@ module Contentstack
       send_request(path)
     end
 
+    def self.get_sync_items(query)
+      path = "/stacks/sync"
+      send_request(path, query)
+    end
+
     private
     def self.send_request(path, q=nil)
       q ||= {}
