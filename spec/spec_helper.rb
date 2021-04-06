@@ -160,4 +160,8 @@ RSpec.configure do |config|
   def create_client(delivery_token = ENV['DELIVERY_TOKEN'], api_key = ENV['API_KEY'], environment = ENV['ENVIRONMENT'], options = {})
     Contentstack::Client.new(api_key, delivery_token, environment, options)
   end
+
+  def render(content, entry)
+    Contentstack.render_content(content, ContentstackUtils::Model::Options.new(entry))
+  end
 end
