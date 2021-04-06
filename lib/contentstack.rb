@@ -3,6 +3,7 @@ $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require "contentstack/version"
 require "contentstack/client"
 require "contentstack/region"
+require "contentstack_utils"
 require "util"
 
 
@@ -22,4 +23,7 @@ require "util"
 # ==== Query entries
 #   @stack.content_type('blog').query.regex('title', '.*hello.*').fetch
 module Contentstack
+    def self.render_content(content, options)
+        ContentstackUtils.render_content(content, options)
+    end
 end
