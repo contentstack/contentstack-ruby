@@ -516,6 +516,19 @@ module Contentstack
       self
     end
 
+    # Include Embedded Objects (Entries and Assets) along with entry/entries details.
+    #
+    # Example
+    #
+    #    @query = @stack.content_type('product').query
+    #    @query.include_embedded_items
+    #
+    # @return [Contentstack::Query]
+    def include_embedded_items()
+      @query[:include_embedded_items] = ['BASE']
+      self
+    end
+
     # Include objects in 'Draft' mode in response
     #
     # Example
