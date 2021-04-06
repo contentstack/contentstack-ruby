@@ -87,7 +87,7 @@ describe Contentstack::Entry do
   end
 
   it "should get data using `include_embedded_items` method" do
-    data = product.include_reference('categories').fetch
+    data = product.include_embedded_items().fetch
     puts data.get("categories.title")
     expect(data.fields[:categories][0][:title]).not_to be nil
   end
