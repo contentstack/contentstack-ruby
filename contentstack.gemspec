@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.files = `git ls-files`.split("\n")
   s.require_paths = ["lib"]
 
-  s.add_dependency 'activesupport', "> 3.2.5"
+  s.add_dependency 'activesupport', "~> 3.2"
   s.add_dependency "contentstack_utils", "~> 1.0.0"
   
   s.add_development_dependency 'rspec', '~> 3.10.0'
