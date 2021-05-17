@@ -6,12 +6,13 @@ require 'open-uri'
 
 module Contentstack
   class API
-    def self.init_api(api_key, delivery_token, environment,host)
+    def self.init_api(api_key, delivery_token, environment, host, branch)
       @host = host
       @api_version = '/v3'
       @environment = environment
       @api_key = api_key
       @access_token = delivery_token
+      @branch = branch
       @headers = {environment: @environment}
     end
 
@@ -53,12 +54,17 @@ module Contentstack
 
       query = "?" + q.to_query
       # puts "Request URL:- #{@host}#{@api_version}#{path}#{query} \n\n"
-      
-      ActiveSupport::JSON.decode(open("#{@host}#{@api_version}#{path}#{query}",
-      "api_key" =>  @api_key,
-      "access_token"=>  @access_token,
-      "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}",
-      "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}").read)
+      params = {
+        "api_key" =>  @api_key,
+        "access_token"=>  @access_token,
+        "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}",
+        "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}"
+      }
+      if !@branch.nil? && !@branch.empty?
+        puts "inside brnach"
+        params[:branch] = @branch
+      end
+      ActiveSupport::JSON.decode(open("#{@host}#{@api_version}#{path}#{query}",params).read)
     end
   end
 end

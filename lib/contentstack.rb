@@ -17,6 +17,8 @@ require "util"
 #   @stack = Contentstack::Client.new("site_api_key", "delivery_token", "enviroment_name", {"region": Contentstack::Region::EU })
 # == Initialize the Stack for custom host
 #   @stack = Contentstack::Client.new("site_api_key", "delivery_token", "enviroment_name", {"host": "https://custom-cdn.contentstack.com" })
+# == Initialize the Stack for EU region
+#   @stack = Contentstack::Client.new("site_api_key", "delivery_token", "enviroment_name", {"branch":"branch_name" })
 # == Usage
 # ==== Get single entry
 #   @stack.content_type('blog').entry('<entry_uid_here>').fetch
