@@ -61,8 +61,7 @@ module Contentstack
         "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}"
       }
       if !@branch.nil? && !@branch.empty?
-        puts "inside brnach"
-        params[:branch] = @branch
+        params["branch"] = @branch
       end
       ActiveSupport::JSON.decode(open("#{@host}#{@api_version}#{path}#{query}",params).read)
     end
