@@ -7,5 +7,5 @@ coverage
 \.yardoc
 .DS_Store
 .bundle/
-*/rspec_results.html
+**/rspec_results.html
 vendor/
