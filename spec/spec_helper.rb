@@ -162,6 +162,9 @@ RSpec.configure do |config|
   end
 
   def render(content, entry)
-    Contentstack.render_content(content, ContentstackUtils::Model::Options.new(entry))
+    Contentstack::render_content(content, ContentstackUtils::Model::Options.new(entry))
+  end
+  def json_to_html(content, entry)
+    Contentstack::json_to_html(content, ContentstackUtils::Model::Options.new(entry))
   end
 end
