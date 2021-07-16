@@ -29,4 +29,11 @@ describe Contentstack do
     expect(custom_host_client.host).to eq 'https://custom-cdn.contentstack.com'  
   end
 
+  it "JSON to HTML" do
+    expect(Contentstack::json_to_html({}, ContentstackUtils::Model::Options.new())).to eq ''  
+  end
+
+  it "JSON to HTML" do
+    expect(Contentstack::render_content('', ContentstackUtils::Model::Options.new())).to eq ''  
+  end
 end
