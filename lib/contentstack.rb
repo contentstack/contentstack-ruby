@@ -26,4 +26,7 @@ module Contentstack
     def self.render_content(content, options)
         ContentstackUtils.render_content(content, options)
     end
+    def self.json_to_html(content, options)
+        ContentstackUtils.json_to_html(content, options)
+    end
 end
