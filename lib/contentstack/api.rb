@@ -54,7 +54,7 @@ module Contentstack
       query = "?" + q.to_query
       # puts "Request URL:- #{@host}#{@api_version}#{path}#{query} \n\n"
       
-      ActiveSupport::JSON.decode(open("#{@host}#{@api_version}#{path}#{query}",
+      ActiveSupport::JSON.decode(URI.open("#{@host}#{@api_version}#{path}#{query}",
       "api_key" =>  @api_key,
       "access_token"=>  @access_token,
       "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}",
