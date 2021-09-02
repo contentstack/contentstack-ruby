@@ -1,9 +1,17 @@
 ## CHANGELOG
 ------------------------------------------------
+## Version 0.4.2
+### Date: 2nd-Sept-2021
+ ### Dependency update
+ - Added URI open on open uri deprecation 
+
+------------------------------------------------
 ## Version 0.4.1
 ### Date: 2nd-Jun-2021
  ### Dependency update
  - Updated gemspec dependency
+
+------------------------------------------------
 
 ## Version 0.4.0
 ### Date: 16th-Apr-2021
