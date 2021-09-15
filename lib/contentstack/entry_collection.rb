@@ -1,7 +1,9 @@
 require 'contentstack/entry'
+require 'util'
 
 module Contentstack
   class EntryCollection
+    using Utility
     attr_reader :entries, :count, :content_type, :schema
 
     def initialize(json, content_type_uid=nil)

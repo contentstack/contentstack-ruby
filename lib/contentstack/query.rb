@@ -1,8 +1,10 @@
 require 'contentstack/entry_collection'
+require 'util'
 
 module Contentstack
   # A class that defines a query that is used to query for Entry instance.
   class Query
+    using Utility
     # @!attribute [r] query
     #   Attribute which has all the information about the query which will be executed against Contentstack API
 

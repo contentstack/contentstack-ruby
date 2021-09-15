@@ -1,7 +1,9 @@
 require 'contentstack/query'
+require 'util'
 
 module Contentstack
   class ContentType
+    using Utility
     [:title, :uid, :created_at, :updated_at, :attributes].each do |method_name|
       if [:created_at, :updated_at].include?(method_name)
         define_method method_name do

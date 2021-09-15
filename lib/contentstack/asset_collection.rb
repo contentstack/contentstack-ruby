@@ -1,8 +1,10 @@
 require 'contentstack/asset'
+require 'util'
 
 module Contentstack
   # Asset class to fetch details of files on Conentstack server.
   class AssetCollection
+    using Utility
     attr_reader :assets
 
     def initialize(assets_array=nil)
