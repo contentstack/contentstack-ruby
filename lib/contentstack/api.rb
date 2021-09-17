@@ -3,9 +3,10 @@ require 'net/http'
 require 'active_support'
 require 'active_support/json'
 require 'open-uri'
-
+require 'util'
 module Contentstack
   class API
+    using Utility
     def self.init_api(api_key, delivery_token, environment,host)
       @host = host
       @api_version = '/v3'

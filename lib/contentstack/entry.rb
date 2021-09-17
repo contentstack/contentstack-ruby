@@ -1,7 +1,9 @@
 require 'active_support/core_ext'
+require 'util'
 
 module Contentstack
   class Entry
+    using Utility
     attr_reader :fields, :content_type, :uid, :owner, :query, :schema, :content_type
     def initialize(attrs, content_type_uid=nil)
       setup(attrs, content_type_uid)
