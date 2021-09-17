@@ -4,8 +4,6 @@ require "contentstack/version"
 require "contentstack/client"
 require "contentstack/region"
 require "contentstack_utils"
-require "util"
-
 
 # == Contentstack - Ruby SDK
 # Contentstack is a content management system that facilitates the process of publication by separating the content from site-related programming and design.

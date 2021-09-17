@@ -1,7 +1,9 @@
+require 'util'
 module Contentstack
 
   # Asset class to fetch file details on Conentstack server.
   class Asset
+    using Utility
     attr_reader :uid, :content_type, :filename, :file_size, :tags, :url
 
     # @!attribute [r] uid

@@ -2,8 +2,10 @@ require 'contentstack/api'
 require 'contentstack/content_type'
 require 'contentstack/asset_collection'
 require 'contentstack/sync_result'
+require 'util'
 module Contentstack
   class Client
+    using Utility
     attr_reader :region, :host
     # Initialize "Contentstack" Client instance
     def initialize(api_key, delivery_token, environment, options={})
