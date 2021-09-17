@@ -1,5 +1,11 @@
 ## CHANGELOG
 ------------------------------------------------
+## Version 0.4.3
+### Date: 17th-Sept-2021
+ ### Dependency update
+ - Issue for Monkey patching resolved. Implemented Refine to extend class within module scope.
+
+------------------------------------------------
 ## Version 0.4.2
 ### Date: 2nd-Sept-2021
  ### Dependency update
