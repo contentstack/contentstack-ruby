@@ -18,7 +18,7 @@ module Contentstack
 
     def self.live_preview_query(query= {})
       @live_preview[:content_type_uid] = query[:content_type_uid]
-      @live_preview[:hash] = query[:hash]
+      @live_preview[:hash] = query[:live_preview]
     end
 
     def self.fetch_content_types(uid="")
