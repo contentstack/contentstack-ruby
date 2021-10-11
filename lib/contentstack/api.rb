@@ -18,7 +18,7 @@ module Contentstack
 
     def self.live_preview_query(query= {})
       @live_preview[:content_type_uid] = query[:content_type_uid]
-      @live_preview[:hash] = query[:live_preview]
+      @live_preview[:live_preview] = query[:live_preview]
     end
 
     def self.fetch_content_types(uid="")
@@ -80,13 +80,14 @@ module Contentstack
     def self.send_preview_request(path, q=nil)
       q ||= {}
 
+      q.merge!({live_preview: (!@live_preview.key?(:live_preview) ? 'init' : @live_preview[:live_preview]),})
+
       query = "?" + q.to_query
       preview_host = @live_preview[:host]
       
       ActiveSupport::JSON.decode(open("#{preview_host}#{@api_version}#{path}#{query}",
       "api_key" =>  @api_key,
       "authorization" => @live_preview[:management_token],
-      "hash" => (!@live_preview.key?(:hash) ? 'init' : @live_preview[:hash]),
       "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}",
       "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}").read)
     end
