@@ -85,7 +85,7 @@ module Contentstack
       
       ActiveSupport::JSON.decode(open("#{preview_host}#{@api_version}#{path}#{query}",
       "api_key" =>  @api_key,
-      "authorization" => @live_preview[:host],
+      "authorization" => @live_preview[:management_token],
       "hash" => (!@live_preview.key?(:hash) ? 'init' : @live_preview[:hash]),
       "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}",
       "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}").read)
