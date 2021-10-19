@@ -3,9 +3,10 @@ require 'net/http'
 require 'active_support'
 require 'active_support/json'
 require 'open-uri'
-
+require 'util'
 module Contentstack
   class API
+    using Utility
     def self.init_api(api_key, delivery_token, environment,host, live_preview)
       @host = host
       @api_version = '/v3'
@@ -70,7 +71,7 @@ module Contentstack
       query = "?" + q.to_query
       # puts "Request URL:- #{@host}#{@api_version}#{path}#{query} \n\n"
       
-      ActiveSupport::JSON.decode(open("#{@host}#{@api_version}#{path}#{query}",
+      ActiveSupport::JSON.decode(URI.open("#{@host}#{@api_version}#{path}#{query}",
       "api_key" =>  @api_key,
       "access_token"=>  @access_token,
       "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}",
