@@ -518,6 +518,19 @@ module Contentstack
       self
     end
 
+    # Include the branch for publish content.
+    #
+    # Example
+    #
+    #    @query = @stack.content_type('product').query
+    #    @query.include_branch
+    #
+    # @return [Contentstack::Entry]
+    def include_branch(flag=true)
+      @query[:include_branch] = flag
+      self
+    end
+
     # Include Embedded Objects (Entries and Assets) along with entry/entries details.
     #
     # Example

@@ -1,9 +1,11 @@
 PATH
   remote: .
   specs:
+
     contentstack (0.4.1)
       activesupport (>= 3.2, < 6.2)
       contentstack_utils (~> 1.0, >= 1.0.1)
+
 
 GEM
   remote: https://rubygems.org/
