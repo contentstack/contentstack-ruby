@@ -7,7 +7,6 @@ require 'util'
 module Contentstack
   class API
     using Utility
-    def self.init_api(api_key, delivery_token, environment,host)
     def self.init_api(api_key, delivery_token, environment, host, branch, live_preview)
       @host = host
       @api_version = '/v3'
