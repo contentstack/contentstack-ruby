@@ -166,7 +166,7 @@ module Contentstack
       @query[:include_branch] = flag
       self
     end
-    
+
     # Include Embedded Objects (Entries and Assets) along with entry/entries details.
     #
     # Example

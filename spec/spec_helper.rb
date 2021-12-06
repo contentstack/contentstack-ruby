@@ -162,7 +162,6 @@ RSpec.configure do |config|
     stub_request(:get, /preview.contentstack.io\/v3\/content_types\/category\/entries\/uid/).
       with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
       to_return(:status => 200, :body => File.read(File.dirname(__FILE__) + '/fixtures/category_entry.json'), :headers => {})
-
   end
 
   def create_client(delivery_token = ENV['DELIVERY_TOKEN'], api_key = ENV['API_KEY'], environment = ENV['ENVIRONMENT'], options = {})
