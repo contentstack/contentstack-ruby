@@ -289,7 +289,7 @@ module Contentstack
     end
 
     # This method provides only the entries matching the specified value.
-    #
+    # @deprecated since version 0.5.0
     # @param [String] text value used to match or compare
     #
     # Example
