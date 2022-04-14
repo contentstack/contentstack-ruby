@@ -7,13 +7,20 @@ require 'util'
 module Contentstack
   class API
     using Utility
-    def self.init_api(api_key, delivery_token, environment,host)
+    def self.init_api(api_key, delivery_token, environment, host, branch, live_preview)
       @host = host
       @api_version = '/v3'
       @environment = environment
       @api_key = api_key
       @access_token = delivery_token
+      @branch = branch
       @headers = {environment: @environment}
+      @live_preview = live_preview
+    end
+
+    def self.live_preview_query(query= {})
+      @live_preview[:content_type_uid] = query[:content_type_uid]
+      @live_preview[:live_preview] = query[:live_preview]
     end
 
     def self.fetch_content_types(uid="")
@@ -26,13 +33,23 @@ module Contentstack
     end
 
     def self.fetch_entries(content_type, query)
-      path = "/content_types/#{content_type}/entries"
-      send_request(path, query)
+      if  @live_preview[:enable] && @live_preview[:content_type_uid] == content_type
+        path = "/content_types/#{content_type}/entries"
+        send_preview_request(path, query)  
+      else
+        path = "/content_types/#{content_type}/entries"
+        send_request(path, query)
+      end
     end
 
     def self.fetch_entry(content_type, entry_uid, query)
-      path = "/content_types/#{content_type}/entries/#{entry_uid}"
-      send_request(path, query)
+      if  @live_preview[:enable] && @live_preview[:content_type_uid] == content_type
+        path = "/content_types/#{content_type}/entries/#{entry_uid}"
+        send_preview_request(path, query)  
+      else
+        path = "/content_types/#{content_type}/entries/#{entry_uid}"
+        send_request(path, query)
+      end
     end
 
     def self.get_assets(asset_uid=nil)
@@ -54,12 +71,35 @@ module Contentstack
 
       query = "?" + q.to_query
       # puts "Request URL:- #{@host}#{@api_version}#{path}#{query} \n\n"
-      
-      ActiveSupport::JSON.decode(URI.open("#{@host}#{@api_version}#{path}#{query}",
-      "api_key" =>  @api_key,
-      "access_token"=>  @access_token,
-      "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}",
-      "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}").read)
+      params = {
+        "api_key" =>  @api_key,
+        "access_token"=>  @access_token,
+        "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}",
+        "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}"
+      }
+      if !@branch.nil? && !@branch.empty?
+        params["branch"] = @branch
+      end
+      ActiveSupport::JSON.decode(URI.open("#{@host}#{@api_version}#{path}#{query}", params).read)
+    end
+
+    def self.send_preview_request(path, q=nil)
+      q ||= {}
+
+      q.merge!({live_preview: (!@live_preview.key?(:live_preview) ? 'init' : @live_preview[:live_preview]),})
+
+      query = "?" + q.to_query
+      preview_host = @live_preview[:host]
+      params = {
+        "api_key" =>  @api_key,
+        "authorization" => @live_preview[:management_token],
+        "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}",
+        "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}"
+      }
+      if !@branch.nil? && !@branch.empty?
+        params["branch"] = @branch
+      end
+      ActiveSupport::JSON.decode(URI.open("#{preview_host}#{@api_version}#{path}#{query}",params).read)
     end
   end
 end

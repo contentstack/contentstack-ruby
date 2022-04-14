@@ -289,7 +289,7 @@ module Contentstack
     end
 
     # This method provides only the entries matching the specified value.
-    #
+    # @deprecated since version 0.5.0
     # @param [String] text value used to match or compare
     #
     # Example
@@ -515,6 +515,19 @@ module Contentstack
     # @return [Contentstack::Query]
     def include_fallback(flag=true)
       @query[:include_fallback] = flag
+      self
+    end
+
+    # Include the branch for publish content.
+    #
+    # Example
+    #
+    #    @query = @stack.content_type('product').query
+    #    @query.include_branch
+    #
+    # @return [Contentstack::Entry]
+    def include_branch(flag=true)
+      @query[:include_branch] = flag
       self
     end
 

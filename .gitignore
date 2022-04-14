@@ -9,3 +9,4 @@ coverage
 .bundle/
 **/rspec_results.html
 vendor/
+.dccache
