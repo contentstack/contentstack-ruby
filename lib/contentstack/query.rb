@@ -249,9 +249,13 @@ module Contentstack
     # @param [String] field_uid UID of the field for which query should be executed
     # @param [String] values The possible values for the key's object
     #
-    # Example
+    # Example 1 - Array Equals Operator Within Group
     #    @query = @stack.content_type('category').query
     #    @query.contained_in("title", ["Electronics", "Apparel"])
+    #
+    # Example 2 - Array Equals Operator Within Modular Blocks
+    #    @query = @stack.content_type('category').query
+    #    @query.contained_in("additional_info.deals.deal_name", ["Christmas Deal", "Summer Deal"])
     #
     # @return [Contentstack::Query]
     def contained_in(field_uid, values)
@@ -264,9 +268,13 @@ module Contentstack
     # @param [String] field_uid UID of the field for which query should be executed
     # @param [String] values The possible values for the key's object
     #
-    # Example
+    # Example 1 - Array Not-equals Operator Within Group
     #    @query = @stack.content_type('category').query
     #    @query.not_contained_in("title", ["Electronics", "Apparel"])
+    #
+    # Example 2 - Array Not-equals Operator Within Modular Blocks
+    #    @query = @stack.content_type('category').query
+    #    @query.not_contained_in("additional_info.deals.deal_name", ["Christmas Deal", "Summer Deal"])
     #
     # @return [Contentstack::Query]
     def not_contained_in(field_uid, values)
@@ -377,6 +385,7 @@ module Contentstack
     # @param [String] code The locale code of the entry
     #
     # Example
+    #    Change language method
     #    @query = @stack.content_type('category').query
     #    @query.locale('en-us')
     #
