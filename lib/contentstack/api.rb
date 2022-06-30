@@ -80,7 +80,17 @@ module Contentstack
       if !@branch.nil? && !@branch.empty?
         params["branch"] = @branch
       end
-      ActiveSupport::JSON.decode(URI.open("#{@host}#{@api_version}#{path}#{query}", params).read)
+      begin
+        ActiveSupport::JSON.decode(URI.open("#{@host}#{@api_version}#{path}#{query}", params).read)
+      rescue OpenURI::HTTPError => error
+        response = error.io
+        #response.status
+        # => ["503", "Service Unavailable"] 
+        error_response = JSON.parse(response.string)
+        error_status = {"status_code" => response.status[0], "status_message" => response.status[1]}
+        error = error_response.merge(error_status)
+        raise Contentstack::Error.new(error.to_s)
+      end
     end
 
     def self.send_preview_request(path, q=nil)
@@ -99,7 +109,17 @@ module Contentstack
       if !@branch.nil? && !@branch.empty?
         params["branch"] = @branch
       end
-      ActiveSupport::JSON.decode(URI.open("#{preview_host}#{@api_version}#{path}#{query}",params).read)
+      begin
+        ActiveSupport::JSON.decode(URI.open("#{preview_host}#{@api_version}#{path}#{query}",params).read)
+      rescue OpenURI::HTTPError => error
+        response = error.io
+        #response.status
+        # => ["503", "Service Unavailable"] 
+        error_response = JSON.parse(response.string)
+        error_status = {"status_code" => response.status[0], "status_message" => response.status[1]}
+        error = error_response.merge(error_status)
+        raise Contentstack::Error.new(error.to_s)
+      end
     end
   end
 end

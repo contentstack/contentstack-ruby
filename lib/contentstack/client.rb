@@ -3,12 +3,19 @@ require 'contentstack/content_type'
 require 'contentstack/asset_collection'
 require 'contentstack/sync_result'
 require 'util'
+require 'contentstack/error'
 module Contentstack
   class Client
     using Utility
     attr_reader :region, :host
     # Initialize "Contentstack" Client instance
     def initialize(api_key, delivery_token, environment, options={})
+      raise Contentstack::Error.new("Api Key is not valid") if api_key.class != String
+      raise Contentstack::Error.new("Api Key Field Should not be Empty") if api_key.empty?
+      raise Contentstack::Error.new("Delivery Token is not valid") if delivery_token.class != String
+      raise Contentstack::Error.new("Delivery Token Field Should not be Empty") if delivery_token.empty?
+      raise Contentstack::Error.new("Envirnoment Field is not valid") if environment.class != String
+      raise Contentstack::Error.new("Envirnoment Field Should not be Empty") if environment.empty?
       @region = options[:region].nil? ? Contentstack::Region::US : options[:region]
       @host = options[:host].nil? ? get_default_region_hosts(@region) : options[:host]
       @live_preview = !options.key?(:live_preview) ? {} : options[:live_preview]
