@@ -80,7 +80,25 @@ module Contentstack
       if !@branch.nil? && !@branch.empty?
         params["branch"] = @branch
       end
-      ActiveSupport::JSON.decode(URI.open("#{@host}#{@api_version}#{path}#{query}", params).read)
+      if @proxy_details.empty?
+
+        ActiveSupport::JSON.decode(URI.open("#{@host}#{@api_version}#{path}#{query}", params).read)
+
+      elsif @proxy_details.present? && @proxy_details[:url].present? && @proxy_details[:port].present? && @proxy_details[:username].present? && @proxy_details[:password].present?
+          
+        proxy_uri = URI.parse("http://#{@proxy_details[:url]}:#{@proxy_details[:port]}")
+        proxy_username = @proxy_details[:username]
+        proxy_password = @proxy_details[:password]
+       
+        ActiveSupport::JSON.decode(URI.open("#{@host}#{@api_version}#{path}#{query}", :proxy_http_basic_authentication => [proxy_uri, proxy_username, proxy_password], "api_key" =>  @api_key, "authorization" => @live_preview[:management_token], "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}", "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}").read)
+
+      elsif @proxy_details.present? && @proxy_details[:url].present? && @proxy_details[:port].present? && @proxy_details[:username].empty? && @proxy_details[:password].empty?
+        proxy_uri = URI.parse("http://#{@proxy_details[:url]}:#{@proxy_details[:port]}")
+        proxy_auth = {"proxy" => proxy_uri}
+        params_with_proxy = params.merge(proxy_auth)
+        ActiveSupport::JSON.decode(open("#{@host}#{@api_version}#{path}#{query}", params_with_proxy).read)
+
+        end
     end
 
     def self.send_preview_request(path, q=nil)

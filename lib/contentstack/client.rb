@@ -13,6 +13,10 @@ module Contentstack
       @host = options[:host].nil? ? get_default_region_hosts(@region) : options[:host]
       @live_preview = !options.key?(:live_preview) ? {} : options[:live_preview]
       @branch = options[:branch].nil? ? "" : options[:branch]
+      @proxy_details = options[:proxy].nil? ? "" : options[:proxy]
+      raise Contentstack::Error.new("Proxy URL Should not be Empty") if @proxy_details.present? && @proxy_details[:url].empty?
+      raise Contentstack::Error.new("Proxy Port Should not be Empty") if @proxy_details.present? && @proxy_details[:port].empty?
+      API.init_api(api_key, delivery_token, environment,  @host, @branch, @live_preview, @proxy_details)
       API.init_api(api_key, delivery_token, environment,  @host, @branch, @live_preview)
     end
     
