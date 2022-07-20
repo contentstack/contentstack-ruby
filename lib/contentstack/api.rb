@@ -133,7 +133,7 @@ module Contentstack
       elsif @proxy_details.present? && @proxy_details[:url].present? && @proxy_details[:port].present? && @proxy_details[:username].empty? && @proxy_details[:password].empty?
         proxy_uri = URI.parse("http://#{@proxy_details[:url]}:#{@proxy_details[:port]}/")
         
-        ActiveSupport::JSON.decode(open("#{preview_host}#{@api_version}#{path}#{query}", "proxy" => proxy_uri, "api_key" =>  @api_key, "authorization" => @live_preview[:management_token], "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}", "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}").read)
+        ActiveSupport::JSON.decode(URI.open("#{preview_host}#{@api_version}#{path}#{query}", "proxy" => proxy_uri, "api_key" =>  @api_key, "authorization" => @live_preview[:management_token], "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}", "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}").read)
 
         end
     end
