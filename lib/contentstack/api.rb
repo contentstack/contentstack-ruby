@@ -130,7 +130,7 @@ module Contentstack
       preview_host = @live_preview[:host]
       params = {
         "api_key" =>  @api_key,
-        "access_token"=>  @access_token,
+        "authorization" => @live_preview[:management_token],
         "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}",
         "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}",
         "read_timeout" => @timeout
