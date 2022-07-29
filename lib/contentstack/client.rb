@@ -14,9 +14,19 @@ module Contentstack
       @live_preview = !options.key?(:live_preview) ? {} : options[:live_preview]
       @branch = options[:branch].nil? ? "" : options[:branch]
       @proxy_details = options[:proxy].nil? ? "" : options[:proxy]
+      @timeout = options[:timeout].nil? ? 3000 : options[:timeout]
+      @retryDelay = options[:retryDelay].nil? ? 3000 : options[:retryDelay]
+      @retryLimit = options[:retryLimit].nil? ? 5 : options[:retryLimit]
+      @errorRetry = options[:errorRetry].nil? ? [408, 429] : options[:errorRetry]
+      retry_options = {
+        "timeout" =>  @timeout.to_s,
+        "retryDelay"=>  @retryDelay,
+        "retryLimit"=> @retryLimit,
+        "errorRetry" => @errorRetry
+      }
       raise Contentstack::Error.new("Proxy URL Should not be Empty") if @proxy_details.present? && @proxy_details[:url].empty?
       raise Contentstack::Error.new("Proxy Port Should not be Empty") if @proxy_details.present? && @proxy_details[:port].empty?
-      API.init_api(api_key, delivery_token, environment,  @host, @branch, @live_preview, @proxy_details)
+      API.init_api(api_key, delivery_token, environment,  @host, @branch, @live_preview, @proxy_details, retry_options)
     end
     
     def content_types
