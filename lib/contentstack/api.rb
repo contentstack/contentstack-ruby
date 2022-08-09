@@ -101,36 +101,38 @@ module Contentstack
       if !@branch.nil? && !@branch.empty?
         params["branch"] = @branch
       end
-      if @proxy_details.empty?
 
-        ActiveSupport::JSON.decode(URI.open("#{@host}#{@api_version}#{path}#{query}", params).read)
-
-      elsif @proxy_details.present? && @proxy_details[:url].present? && @proxy_details[:port].present? && @proxy_details[:username].present? && @proxy_details[:password].present?
-          
-        proxy_uri = URI.parse("http://#{@proxy_details[:url]}:#{@proxy_details[:port]}/")
-        proxy_username = @proxy_details[:username]
-        proxy_password = @proxy_details[:password]
-       
-        if !@branch.nil? && !@branch.empty?
-          ActiveSupport::JSON.decode(URI.open("#{@host}#{@api_version}#{path}#{query}", :proxy_http_basic_authentication => [proxy_uri, proxy_username, proxy_password], "api_key" =>  @api_key, "access_token"=>  @access_token, "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}", "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}", "read_timeout" => @timeout, "branch" => @branch).read)
-        else
-          ActiveSupport::JSON.decode(URI.open("#{@host}#{@api_version}#{path}#{query}", :proxy_http_basic_authentication => [proxy_uri, proxy_username, proxy_password], "api_key" =>  @api_key, "access_token"=>  @access_token, "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}", "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}", "read_timeout" => @timeout).read)
-        end
-        
-
-      elsif @proxy_details.present? && @proxy_details[:url].present? && @proxy_details[:port].present? && @proxy_details[:username].empty? && @proxy_details[:password].empty?
-        proxy_uri = URI.parse("http://#{@proxy_details[:url]}:#{@proxy_details[:port]}/")
-
-        if !@branch.nil? && !@branch.empty?
-          ActiveSupport::JSON.decode(URI.open("#{@host}#{@api_version}#{path}#{query}", "proxy" => proxy_uri, "api_key" =>  @api_key, "access_token"=>  @access_token, "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}", "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}", "read_timeout" => @timeout, "branch" => @branch).read)
-        else
-          ActiveSupport::JSON.decode(URI.open("#{@host}#{@api_version}#{path}#{query}", "proxy" => proxy_uri, "api_key" =>  @api_key, "access_token"=>  @access_token, "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}", "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}", "read_timeout" => @timeout).read)
-        end
-
-      
-        
-
-        end
+      begin
+        if @proxy_details.empty?
+          ActiveSupport::JSON.decode(URI.open("#{@host}#{@api_version}#{path}#{query}", params).read)
+        elsif @proxy_details.present? && @proxy_details[:url].present? && @proxy_details[:port].present? && @proxy_details[:username].present? && @proxy_details[:password].present?
+          proxy_uri = URI.parse("http://#{@proxy_details[:url]}:#{@proxy_details[:port]}/")
+          proxy_username = @proxy_details[:username]
+          proxy_password = @proxy_details[:password]
+         
+          if !@branch.nil? && !@branch.empty?
+            ActiveSupport::JSON.decode(URI.open("#{@host}#{@api_version}#{path}#{query}", :proxy_http_basic_authentication => [proxy_uri, proxy_username, proxy_password], "api_key" =>  @api_key, "access_token"=>  @access_token, "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}", "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}", "read_timeout" => @timeout, "branch" => @branch).read)
+          else
+            ActiveSupport::JSON.decode(URI.open("#{@host}#{@api_version}#{path}#{query}", :proxy_http_basic_authentication => [proxy_uri, proxy_username, proxy_password], "api_key" =>  @api_key, "access_token"=>  @access_token, "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}", "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}", "read_timeout" => @timeout).read)
+          end
+        elsif @proxy_details.present? && @proxy_details[:url].present? && @proxy_details[:port].present? && @proxy_details[:username].empty? && @proxy_details[:password].empty?
+          proxy_uri = URI.parse("http://#{@proxy_details[:url]}:#{@proxy_details[:port]}/")
+  
+          if !@branch.nil? && !@branch.empty?
+            ActiveSupport::JSON.decode(URI.open("#{@host}#{@api_version}#{path}#{query}", "proxy" => proxy_uri, "api_key" =>  @api_key, "access_token"=>  @access_token, "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}", "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}", "read_timeout" => @timeout, "branch" => @branch).read)
+          else
+            ActiveSupport::JSON.decode(URI.open("#{@host}#{@api_version}#{path}#{query}", "proxy" => proxy_uri, "api_key" =>  @api_key, "access_token"=>  @access_token, "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}", "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}", "read_timeout" => @timeout).read)
+          end
+        end      
+        rescue OpenURI::HTTPError => error
+        response = error.io
+        #response.status
+        # => ["503", "Service Unavailable"] 
+        error_response = JSON.parse(response.string)
+        error_status = {"status_code" => response.status[0], "status_message" => response.status[1]}
+        error = error_response.merge(error_status)
+        raise Contentstack::Error.new(error.to_s)
+      end
     end
 
     def self.send_preview_request(path, q=nil)
@@ -150,38 +152,37 @@ module Contentstack
       if !@branch.nil? && !@branch.empty?
         params["branch"] = @branch
       end
-      
-      if @proxy_details.empty?
-
-        ActiveSupport::JSON.decode(URI.open("#{preview_host}#{@api_version}#{path}#{query}",params).read)
-
-      elsif @proxy_details.present? && @proxy_details[:url].present? && @proxy_details[:port].present? && @proxy_details[:username].present? && @proxy_details[:password].present?
+      begin
+        if @proxy_details.empty?
+          ActiveSupport::JSON.decode(URI.open("#{preview_host}#{@api_version}#{path}#{query}",params).read)
+        elsif @proxy_details.present? && @proxy_details[:url].present? && @proxy_details[:port].present? && @proxy_details[:username].present? && @proxy_details[:password].present?
+          proxy_uri = URI.parse("http://#{@proxy_details[:url]}:#{@proxy_details[:port]}/")
+          proxy_username = @proxy_details[:username]
+          proxy_password = @proxy_details[:password]
+  
+          if !@branch.nil? && !@branch.empty?
+            ActiveSupport::JSON.decode(URI.open("#{preview_host}#{@api_version}#{path}#{query}", :proxy_http_basic_authentication => [proxy_uri, proxy_username, proxy_password], "api_key" =>  @api_key, "authorization" => @live_preview[:management_token], "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}", "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}", "read_timeout" => @timeout, "branch" => @branch).read)
+          else
+            ActiveSupport::JSON.decode(URI.open("#{preview_host}#{@api_version}#{path}#{query}", :proxy_http_basic_authentication => [proxy_uri, proxy_username, proxy_password], "api_key" =>  @api_key, "authorization" => @live_preview[:management_token], "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}", "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}", "read_timeout" => @timeout).read)
+          end
+        elsif @proxy_details.present? && @proxy_details[:url].present? && @proxy_details[:port].present? && @proxy_details[:username].empty? && @proxy_details[:password].empty?
+          proxy_uri = URI.parse("http://#{@proxy_details[:url]}:#{@proxy_details[:port]}/")
           
-        proxy_uri = URI.parse("http://#{@proxy_details[:url]}:#{@proxy_details[:port]}/")
-        proxy_username = @proxy_details[:username]
-        proxy_password = @proxy_details[:password]
-
-        if !@branch.nil? && !@branch.empty?
-          ActiveSupport::JSON.decode(URI.open("#{preview_host}#{@api_version}#{path}#{query}", :proxy_http_basic_authentication => [proxy_uri, proxy_username, proxy_password], "api_key" =>  @api_key, "authorization" => @live_preview[:management_token], "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}", "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}", "read_timeout" => @timeout, "branch" => @branch).read)
-        else
-          ActiveSupport::JSON.decode(URI.open("#{preview_host}#{@api_version}#{path}#{query}", :proxy_http_basic_authentication => [proxy_uri, proxy_username, proxy_password], "api_key" =>  @api_key, "authorization" => @live_preview[:management_token], "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}", "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}", "read_timeout" => @timeout).read)
+          if !@branch.nil? && !@branch.empty?
+            ActiveSupport::JSON.decode(URI.open("#{preview_host}#{@api_version}#{path}#{query}", "proxy" => proxy_uri, "api_key" =>  @api_key, "authorization" => @live_preview[:management_token], "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}", "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}", "read_timeout" => @timeout, "branch" => @branch).read)
+          else
+            ActiveSupport::JSON.decode(URI.open("#{preview_host}#{@api_version}#{path}#{query}", "proxy" => proxy_uri, "api_key" =>  @api_key, "authorization" => @live_preview[:management_token], "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}", "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}", "read_timeout" => @timeout).read)
+          end
         end
-
-       
-        
-
-      elsif @proxy_details.present? && @proxy_details[:url].present? && @proxy_details[:port].present? && @proxy_details[:username].empty? && @proxy_details[:password].empty?
-        proxy_uri = URI.parse("http://#{@proxy_details[:url]}:#{@proxy_details[:port]}/")
-        
-        if !@branch.nil? && !@branch.empty?
-          ActiveSupport::JSON.decode(URI.open("#{preview_host}#{@api_version}#{path}#{query}", "proxy" => proxy_uri, "api_key" =>  @api_key, "authorization" => @live_preview[:management_token], "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}", "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}", "read_timeout" => @timeout, "branch" => @branch).read)
-        else
-          ActiveSupport::JSON.decode(URI.open("#{preview_host}#{@api_version}#{path}#{query}", "proxy" => proxy_uri, "api_key" =>  @api_key, "authorization" => @live_preview[:management_token], "user_agent"=> "ruby-sdk/#{Contentstack::VERSION}", "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}", "read_timeout" => @timeout).read)
-        end
-
-        
-
-        end
+      rescue OpenURI::HTTPError => error
+        response = error.io
+        #response.status
+        # => ["503", "Service Unavailable"] 
+        error_response = JSON.parse(response.string)
+        error_status = {"status_code" => response.status[0], "status_message" => response.status[1]}
+        error = error_response.merge(error_status)
+        raise Contentstack::Error.new(error.to_s)
+      end
     end
   end
 end
