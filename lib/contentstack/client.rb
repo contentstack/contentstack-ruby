@@ -3,17 +3,37 @@ require 'contentstack/content_type'
 require 'contentstack/asset_collection'
 require 'contentstack/sync_result'
 require 'util'
+require 'contentstack/error'
 module Contentstack
   class Client
     using Utility
     attr_reader :region, :host
     # Initialize "Contentstack" Client instance
     def initialize(api_key, delivery_token, environment, options={})
+      raise Contentstack::Error.new("Api Key is not valid") if api_key.class != String
+      raise Contentstack::Error.new("Api Key Field Should not be Empty") if api_key.empty?
+      raise Contentstack::Error.new("Delivery Token is not valid") if delivery_token.class != String
+      raise Contentstack::Error.new("Delivery Token Field Should not be Empty") if delivery_token.empty?
+      raise Contentstack::Error.new("Envirnoment Field is not valid") if environment.class != String
+      raise Contentstack::Error.new("Envirnoment Field Should not be Empty") if environment.empty?
       @region = options[:region].nil? ? Contentstack::Region::US : options[:region]
       @host = options[:host].nil? ? get_default_region_hosts(@region) : options[:host]
       @live_preview = !options.key?(:live_preview) ? {} : options[:live_preview]
       @branch = options[:branch].nil? ? "" : options[:branch]
-      API.init_api(api_key, delivery_token, environment,  @host, @branch, @live_preview)
+      @proxy_details = options[:proxy].nil? ? "" : options[:proxy]
+      @timeout = options[:timeout].nil? ? 3000 : options[:timeout]
+      @retryDelay = options[:retryDelay].nil? ? 3000 : options[:retryDelay]
+      @retryLimit = options[:retryLimit].nil? ? 5 : options[:retryLimit]
+      @errorRetry = options[:errorRetry].nil? ? [408, 429] : options[:errorRetry]
+      retry_options = {
+        "timeout" =>  @timeout.to_s,
+        "retryDelay"=>  @retryDelay,
+        "retryLimit"=> @retryLimit,
+        "errorRetry" => @errorRetry
+      }
+      raise Contentstack::Error.new("Proxy URL Should not be Empty") if @proxy_details.present? && @proxy_details[:url].empty?
+      raise Contentstack::Error.new("Proxy Port Should not be Empty") if @proxy_details.present? && @proxy_details[:port].empty?
+      API.init_api(api_key, delivery_token, environment,  @host, @branch, @live_preview, @proxy_details, retry_options)
     end
     
     def content_types
