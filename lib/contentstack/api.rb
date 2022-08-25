@@ -24,8 +24,8 @@ module Contentstack
     end
 
     def self.live_preview_query(query= {})
-      @live_preview[:content_type_uid] = query[:content_type_uid]
-      @live_preview[:live_preview] = query[:live_preview]
+      @live_preview[:content_type_uid] = query[:content_type_uid] || query["content_type_uid"]
+      @live_preview[:live_preview] = query[:live_preview] || query["live_preview"]
       @live_preview[:entry_uid] = query[:entry_uid] || query["entry_uid"]
       if @live_preview[:content_type_uid].present? && @live_preview[:entry_uid].present?
         path = "/content_types/#{@live_preview[:content_type_uid]}/entries/#{@live_preview[:entry_uid]}"
