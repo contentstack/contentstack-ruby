@@ -24,8 +24,13 @@ module Contentstack
     end
 
     def self.live_preview_query(query= {})
-      @live_preview[:content_type_uid] = query[:content_type_uid]
-      @live_preview[:live_preview] = query[:live_preview]
+      @live_preview[:content_type_uid] = query[:content_type_uid] || query["content_type_uid"]
+      @live_preview[:live_preview] = query[:live_preview] || query["live_preview"]
+      @live_preview[:entry_uid] = query[:entry_uid] || query["entry_uid"]
+      if @live_preview[:content_type_uid].present? && @live_preview[:entry_uid].present?
+        path = "/content_types/#{@live_preview[:content_type_uid]}/entries/#{@live_preview[:entry_uid]}"
+        @live_preview_response = send_preview_request(path)
+      end 
     end
 
     def self.fetch_content_types(uid="")
@@ -80,7 +85,7 @@ module Contentstack
          raise Contentstack::Error.new(response) #Retry Limit exceeded
         end  
       else
-        response
+        to_render_content(response)
       end
     end
 
@@ -184,5 +189,24 @@ module Contentstack
         raise Contentstack::Error.new(error.to_s)
       end
     end
+
+    def self.to_render_content(resp)
+      if resp.class == Hash
+        if resp.key?('uid') && resp['uid'] == @live_preview[:entry_uid]
+          resp = resp.merge(@live_preview_response)
+        else
+          resp_keys = resp.keys
+            resp_keys.each {|key|
+              resp[key] = to_render_content(resp[key])
+            } 
+        end
+      elsif resp.class == Array
+        resp.each_with_index {|value, index|
+          resp[index] = to_render_content(value)
+        } 
+      end
+      resp
+    end
+    
   end
 end
