@@ -32,6 +32,8 @@ GEM
     nokogiri (1.13.9)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
+    nokogiri (1.13.9-x64-mingw32)
+      racc (~> 1.4)
     public_suffix (5.0.0)
     racc (1.6.0)
     rexml (3.2.5)
@@ -67,6 +69,7 @@ GEM
 
 PLATFORMS
   ruby
+  x64-mingw32
 
 DEPENDENCIES
   contentstack!
@@ -76,4 +79,4 @@ DEPENDENCIES
   yard (~> 0.9.26)
 
 BUNDLED WITH
-   2.2.7
+   2.3.13
