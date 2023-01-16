@@ -4,10 +4,12 @@ require 'active_support'
 require 'active_support/json'
 require 'open-uri'
 require 'util'
+require 'contentstack/contentstack_plugin'
+
 module Contentstack
   class API
     using Utility
-    def self.init_api(api_key, delivery_token, environment, host, branch, live_preview, proxy, retry_options)
+    def self.init_api(api_key, delivery_token, environment, host, branch, live_preview, proxy, retry_options, plugins)
       @host = host
       @api_version = '/v3'
       @environment = environment
@@ -21,6 +23,7 @@ module Contentstack
       @retryDelay = retry_options["retryDelay"]
       @retryLimit = retry_options["retryLimit"]
       @errorRetry = retry_options["errorRetry"]
+      @plugins = plugins
     end
 
     def self.live_preview_query(query= {})
@@ -116,8 +119,16 @@ module Contentstack
         params[:proxy_http_basic_authentication] = [proxy_uri, @proxy_details[:username], @proxy_details[:password]]
       end
 
+      @plugins.each do |plugin|
+        plugin.onRequest(params, path, query);
+      end
+
       begin
-        ActiveSupport::JSON.decode(URI.open("#{@host}#{@api_version}#{path}#{query}", params).read)
+        response = ActiveSupport::JSON.decode(URI.open("#{@host}#{@api_version}#{path}#{query}", params).read)
+        @plugins.each do |plugin|
+          plugin.onResponse(params, path, query, response);
+        end 
+        response
       rescue OpenURI::HTTPError => error
         response = error.io
         #response.status
