@@ -1,4 +1,28 @@
 ## CHANGELOG
+
+## Version 0.6.1
+### Date: 9th-Sept-2022
+ ### Bug
+ - Live Preview feature for entry with reference update.
+
+------------------------------------------------
+## Version 0.6.0
+### Date: 17th-Aug-2022
+ ### New Features
+ - Proxy and Retry functionality support added.
+
+------------------------------------------------
+## Version 0.5.1
+### Date: 21st-Apr-2022
+ ### Package Update
+ - API request with URI.OPEN issue resolved.
+
+------------------------------------------------
+## Version 0.5.0
+### Date: 8th-Dec-2021
+ ### New Feature
+ - Live Preview feature support added.
+
 ------------------------------------------------
 ## Version 0.4.3
 ### Date: 17th-Sept-2021
