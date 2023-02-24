@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency 'activesupport', '>= 3.2', '< 7.0.4'
-  s.add_dependency "contentstack_utils", '~> 1.0', '>= 1.0.1'
+  s.add_dependency "contentstack_utils", '~> 1.0', '>= 1.1.1'
   
   s.add_development_dependency 'rspec', '~> 3.10.0'
   s.add_development_dependency 'webmock', '~> 3.11.0'
