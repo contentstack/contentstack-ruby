@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+## Version 0.6.2
+### Date: 27th-Feb-2023
+ ### Package Update
+ - Dependency gem update.
+
+------------------------------------------------
 ## Version 0.6.1
 ### Date: 9th-Sept-2022
  ### Bug
