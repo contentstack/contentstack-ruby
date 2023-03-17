@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+## Version 0.6.3
+### Date: 16th-Mar-2023
+ ### Package Update
+ - Dependency gem max version issue resolved.
+
+------------------------------------------------
 ## Version 0.6.2
 ### Date: 27th-Feb-2023
  ### Package Update

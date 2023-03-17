@@ -1,34 +1,31 @@
 PATH
   remote: .
   specs:
-    contentstack (0.6.1)
-      activesupport (>= 3.2, < 7.0.4)
-      contentstack_utils (~> 1.0, >= 1.1.1)
+    contentstack (0.6.3)
+      activesupport (~> 3.2)
+      contentstack_utils (~> 1.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (6.1.7.2)
-      concurrent-ruby (~> 1.0, >= 1.0.2)
-      i18n (>= 1.6, < 2)
-      minitest (>= 5.1)
-      tzinfo (~> 2.0)
-      zeitwerk (~> 2.3)
+    activesupport (3.2.22.5)
+      i18n (~> 0.6, >= 0.6.4)
+      multi_json (~> 1.0)
     addressable (2.8.1)
       public_suffix (>= 2.0.2, < 6.0)
-    concurrent-ruby (1.2.0)
-    contentstack_utils (1.1.1)
-      activesupport (>= 3.2, < 6.2)
+    concurrent-ruby (1.2.2)
+    contentstack_utils (1.1.2)
+      activesupport (>= 3.2, < 7.0.4)
       nokogiri (~> 1.11, >= 1.11.0)
     crack (0.4.5)
       rexml
     diff-lcs (1.5.0)
     docile (1.4.0)
     hashdiff (1.0.1)
-    i18n (1.12.0)
+    i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     mini_portile2 (2.8.1)
-    minitest (5.17.0)
+    multi_json (1.15.0)
     nokogiri (1.13.10)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
@@ -56,8 +53,6 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
-    tzinfo (2.0.6)
-      concurrent-ruby (~> 1.0)
     webmock (3.11.3)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -65,7 +60,6 @@ GEM
     webrick (1.7.0)
     yard (0.9.28)
       webrick (~> 1.7.0)
-    zeitwerk (2.6.7)
 
 PLATFORMS
   ruby
