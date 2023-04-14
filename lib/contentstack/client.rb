@@ -80,11 +80,16 @@ module Contentstack
 
     private
     def get_default_region_hosts(region='us')
+      host = "https://cdn.contentstack.io"
       case region
       when "us"
         host = "https://cdn.contentstack.io"
       when "eu"
         host = "https://eu-cdn.contentstack.com"
+      when "azure-na"
+        host = "https://azure-na-cdn.contentstack.com"
+      when "azure-eu"
+        host = "https://azure-eu-cdn.contentstack.com"
       end
       host
     end

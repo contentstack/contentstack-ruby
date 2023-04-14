@@ -65,6 +65,11 @@ describe Contentstack::Query do
     expect(data.count).to eq 5
   end
 
+  it "should get data using `include_metadata` method" do
+    data = category_query.include_metadata.fetch
+    expect(data.length).to eq 5
+  end
+
   it "should get data using `only` method with string parameter" do
     data = category_query.only("title").fetch
     expect(data.first.fields[:title]).not_to be nil
