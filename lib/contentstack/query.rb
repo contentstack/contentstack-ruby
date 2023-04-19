@@ -348,6 +348,18 @@ module Contentstack
       self
     end
 
+    # Retrieve count and data of objects in result.
+    #
+    # Example
+    #    @query = @stack.content_type('category').query
+    #    @query.include_metadata
+    #
+    # @return [Contentstack::Query]
+    def include_metadata(flag=true)
+      @query[:include_metadata] = flag
+      self
+    end
+
     # Sort the results in ascending order with the given key. 
     # Sort the returned entries in ascending order of the provided key.
     #
