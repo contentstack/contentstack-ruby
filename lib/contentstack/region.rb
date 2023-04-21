@@ -4,7 +4,7 @@ module Contentstack
     US='us'
     AZURE_NA='azure-na'
     AZURE_EU='azure-eu'
-    PROTOCOL='https'
+    PROTOCOL='https://'
     DEFAULT_HOST='cdn.contentstack.io'
     HOST='contentstack.com'
   end
