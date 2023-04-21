@@ -81,16 +81,16 @@ module Contentstack
 
     private
     def get_default_region_hosts(region='us')
-      host = "#{Contentstack::Region::PROTOCOL}#{Contentstack::Region::DEFAULT_HOST}" #set default host if region is nil
+      host = "#{Contentstack::Host::PROTOCOL}#{Contentstack::Host::DEFAULT_HOST}" #set default host if region is nil
       case region
       when "us"
-        host = "#{Contentstack::Region::PROTOCOL}#{Contentstack::Region::DEFAULT_HOST}"
+        host = "#{Contentstack::Host::PROTOCOL}#{Contentstack::Host::DEFAULT_HOST}"
       when "eu"
-        host = "#{Contentstack::Region::PROTOCOL}eu-cdn.#{Contentstack::Region::HOST}"
+        host = "#{Contentstack::Host::PROTOCOL}eu-cdn.#{Contentstack::Host::HOST}"
       when "azure-na"
-        host = "#{Contentstack::Region::PROTOCOL}azure-na-cdn.#{Contentstack::Region::HOST}"
+        host = "#{Contentstack::Host::PROTOCOL}azure-na-cdn.#{Contentstack::Host::HOST}"
       when "azure-eu"
-        host = "#{Contentstack::Region::PROTOCOL}azure-eu-cdn.#{Contentstack::Region::HOST}"
+        host = "#{Contentstack::Host::PROTOCOL}azure-eu-cdn.#{Contentstack::Host::HOST}"
       end
       host
     end
@@ -102,19 +102,19 @@ module Contentstack
         custom_host = options[:host]
         case region
         when "us"
-        host = "#{Contentstack::Region::PROTOCOL}cdn.#{custom_host}"
+        host = "#{Contentstack::Host::PROTOCOL}cdn.#{custom_host}"
         when "eu"
-          host = "#{Contentstack::Region::PROTOCOL}eu-cdn.#{custom_host}"
+          host = "#{Contentstack::Host::PROTOCOL}eu-cdn.#{custom_host}"
         when "azure-na"
-          host = "#{Contentstack::Region::PROTOCOL}azure-na-cdn.#{custom_host}"
+          host = "#{Contentstack::Host::PROTOCOL}azure-na-cdn.#{custom_host}"
         when "azure-eu"
-          host = "#{Contentstack::Region::PROTOCOL}azure-eu-cdn.#{custom_host}"
+          host = "#{Contentstack::Host::PROTOCOL}azure-eu-cdn.#{custom_host}"
         end
       elsif options[:host].present? && region.empty?
         custom_host = options[:host]
-        host = "#{Contentstack::Region::PROTOCOL}cdn.#{custom_host}"
+        host = "#{Contentstack::Host::PROTOCOL}cdn.#{custom_host}"
       else
-        host = "#{Contentstack::Region::PROTOCOL}#{Contentstack::Region::DEFAULT_HOST}" #set default host if region and host is empty  
+        host = "#{Contentstack::Host::PROTOCOL}#{Contentstack::Host::DEFAULT_HOST}" #set default host if region and host is empty  
       end
       host
     end
