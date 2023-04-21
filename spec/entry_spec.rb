@@ -92,6 +92,16 @@ describe Contentstack::Entry do
     data = category.include_metadata.fetch
     expect(data.content_type).not_to be nil
   end
+
+  it "should get data using `include_metadata` method with param false" do
+    data = category.include_metadata(false).fetch
+    expect(data.content_type).not_to be nil
+  end
+
+  it "should get data using `include_metadata` method with param true" do
+    data = category.include_metadata(true).fetch
+    expect(data.content_type).not_to be nil
+  end
   
   it "should get data using `include_reference` method" do
     data = product.include_reference('categories').fetch

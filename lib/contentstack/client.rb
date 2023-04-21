@@ -81,16 +81,17 @@ module Contentstack
 
     private
     def get_default_region_hosts(region='us')
-      host = "https://cdn.contentstack.io" #set default host if region is nil
+
+      host = "#{Contentstack::Region::PROTOCOL}://#{Contentstack::Region::DEFAULT_HOST}" #set default host if region is nil
       case region
       when "us"
-        host = "https://cdn.contentstack.io"
+        host = "#{Contentstack::Region::PROTOCOL}://#{Contentstack::Region::DEFAULT_HOST}"
       when "eu"
-        host = "https://eu-cdn.contentstack.com"
+        host = "#{Contentstack::Region::PROTOCOL}://eu-cdn.#{Contentstack::Region::HOST}"
       when "azure-na"
-        host = "https://azure-na-cdn.contentstack.com"
+        host = "#{Contentstack::Region::PROTOCOL}://azure-na-cdn.#{Contentstack::Region::HOST}"
       when "azure-eu"
-        host = "https://azure-eu-cdn.contentstack.com"
+        host = "#{Contentstack::Region::PROTOCOL}://azure-eu-cdn.#{Contentstack::Region::HOST}"
       end
       host
     end
@@ -102,19 +103,19 @@ module Contentstack
         custom_host = options[:host]
         case region
         when "us"
-        host = "https://cdn.#{custom_host}"
+        host = "#{Contentstack::Region::PROTOCOL}://cdn.#{custom_host}"
         when "eu"
-          host = "https://eu-cdn.#{custom_host}"
+          host = "#{Contentstack::Region::PROTOCOL}://eu-cdn.#{custom_host}"
         when "azure-na"
-          host = "https://azure-na-cdn.#{custom_host}"
+          host = "#{Contentstack::Region::PROTOCOL}://azure-na-cdn.#{custom_host}"
         when "azure-eu"
-          host = "https://azure-eu-cdn.#{custom_host}"
+          host = "#{Contentstack::Region::PROTOCOL}://azure-eu-cdn.#{custom_host}"
         end
       elsif options[:host].present? && region.empty?
         custom_host = options[:host]
-        host = "https://cdn.#{custom_host}"
+        host = "#{Contentstack::Region::PROTOCOL}://cdn.#{custom_host}"
       else
-        host = "https://cdn.contentstack.io" #set default host if region and host is empty  
+        host = "#{Contentstack::Region::PROTOCOL}://#{Contentstack::Region::DEFAULT_HOST}" #set default host if region and host is empty  
       end
       host
     end
