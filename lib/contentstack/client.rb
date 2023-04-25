@@ -17,7 +17,8 @@ module Contentstack
       raise Contentstack::Error.new("Envirnoment Field is not valid") if environment.class != String
       raise Contentstack::Error.new("Envirnoment Field Should not be Empty") if environment.empty?
       @region = options[:region].nil? ? Contentstack::Region::US : options[:region]
-      @host = options[:host].nil? ? get_default_region_hosts(@region) : options[:host]
+      # @host = options[:host].nil? ? get_default_region_hosts(@region) : options[:host] #removed for not supporting custom host with regions
+      @host = get_host_by_region(@region, options) # Added new method for custom host support with different regions
       @live_preview = !options.key?(:live_preview) ? {} : options[:live_preview]
       @branch = options[:branch].nil? ? "" : options[:branch]
       @proxy_details = options[:proxy].nil? ? "" : options[:proxy]
@@ -80,13 +81,43 @@ module Contentstack
 
     private
     def get_default_region_hosts(region='us')
+      host = "#{Contentstack::Host::PROTOCOL}#{Contentstack::Host::DEFAULT_HOST}" #set default host if region is nil
       case region
       when "us"
-        host = "https://cdn.contentstack.io"
+        host = "#{Contentstack::Host::PROTOCOL}#{Contentstack::Host::DEFAULT_HOST}"
       when "eu"
-        host = "https://eu-cdn.contentstack.com"
+        host = "#{Contentstack::Host::PROTOCOL}eu-cdn.#{Contentstack::Host::HOST}"
+      when "azure-na"
+        host = "#{Contentstack::Host::PROTOCOL}azure-na-cdn.#{Contentstack::Host::HOST}"
+      when "azure-eu"
+        host = "#{Contentstack::Host::PROTOCOL}azure-eu-cdn.#{Contentstack::Host::HOST}"
       end
       host
     end
+
+    def get_host_by_region(region, options)
+      if options[:host].nil? && region.present?
+        host = get_default_region_hosts(region)
+      elsif options[:host].present? && region.present?
+        custom_host = options[:host]
+        case region
+        when "us"
+        host = "#{Contentstack::Host::PROTOCOL}cdn.#{custom_host}"
+        when "eu"
+          host = "#{Contentstack::Host::PROTOCOL}eu-cdn.#{custom_host}"
+        when "azure-na"
+          host = "#{Contentstack::Host::PROTOCOL}azure-na-cdn.#{custom_host}"
+        when "azure-eu"
+          host = "#{Contentstack::Host::PROTOCOL}azure-eu-cdn.#{custom_host}"
+        end
+      elsif options[:host].present? && region.empty?
+        custom_host = options[:host]
+        host = "#{Contentstack::Host::PROTOCOL}cdn.#{custom_host}"
+      else
+        host = "#{Contentstack::Host::PROTOCOL}#{Contentstack::Host::DEFAULT_HOST}" #set default host if region and host is empty  
+      end
+      host
+    end
+
   end
 end

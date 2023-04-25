@@ -1,5 +1,20 @@
 ## CHANGELOG
 
+## Version 0.6.4
+### Date: 17th-Apr-2023
+ ### Enhancement
+ - Include metadata support for Asset, Entry and Query,
+ - Region support for Azure-EU added
+
+------------------------------------------------
+
+## Version 0.6.3.1
+### Date: 17th-Mar-2023
+ ### Package Update
+ - Activesupport gem version limit removed (for supporting ruby v3.0 and above) .
+
+------------------------------------------------
+
 ## Version 0.6.3
 ### Date: 16th-Mar-2023
  ### Package Update

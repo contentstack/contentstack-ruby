@@ -167,6 +167,20 @@ module Contentstack
       self
     end
 
+    # Include the metadata for publish content.
+    #
+    # Example
+    #
+    #    @entry = @stack.content_type('product').entry(entry_uid)
+    #    @entry.include_metadata
+    #
+    # @return [Contentstack::Entry]
+    def include_metadata(flag=true)
+      @query[:include_metadata] = flag
+      self
+    end
+
+
     # Include Embedded Objects (Entries and Assets) along with entry/entries details.
     #
     # Example
