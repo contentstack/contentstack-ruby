@@ -1,6 +1,12 @@
 ## CHANGELOG
 
-## Version 0.6.4
+## Version 0.8.0
+### Date: 14th-May-2024
+ ### Enhancement
+ - Region support for GCP-NA added
+
+------------------------------------------------
+## Version 0.7.0
 ### Date: 17th-Apr-2023
  ### Enhancement
  - Include metadata support for Asset, Entry and Query,
