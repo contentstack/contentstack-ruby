@@ -4,6 +4,7 @@ module Contentstack
     US='us'
     AZURE_NA='azure-na'
     AZURE_EU='azure-eu'
+    GCP_NA='gcp-na'
   end
 
   class Host

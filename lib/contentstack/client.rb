@@ -36,7 +36,7 @@ module Contentstack
       raise Contentstack::Error.new("Proxy Port Should not be Empty") if @proxy_details.present? && @proxy_details[:port].empty?
       API.init_api(api_key, delivery_token, environment,  @host, @branch, @live_preview, @proxy_details, retry_options)
     end
-    
+
     def content_types
       ContentType.all
     end
@@ -56,21 +56,21 @@ module Contentstack
     def live_preview_query(query={})
       API.live_preview_query(query)
     end
-    
+
     # Syncs your Contentstack data with your app and ensures that the data is always up-to-date by providing delta updates
-    # 
+    #
     #   Stack.sync({'init': true})        // For initializing sync
-    # 
+    #
     #   Stack.sync({'init': true, 'locale': 'en-us'})     //For initializing sync with entries of a specific locale
-    # 
+    #
     #   Stack.sync({'init': true, 'start_date': '2018-10-22'})    //For initializing sync with entries published after a specific date
-    # 
+    #
     #   Stack.sync({'init': true, 'content_type_uid': 'session'})   //For initializing sync with entries of a specific content type
-    # 
+    #
     #   Stack.sync({'init': true, 'type': 'entry_published'})   // Use the type parameter to get a specific type of content.Supports 'asset_published', 'entry_published', 'asset_unpublished', 'entry_unpublished', 'asset_deleted', 'entry_deleted', 'content_type_deleted'.
-    # 
+    #
     #   Stack.sync({'pagination_token': '<pagination>'})    // For fetching the next batch of entries using pagination token
-    # 
+    #
     #   Stack.sync({'sync_token': '<sync>'})    // For performing subsequent sync after initial sync
     #
     # @param params [Hash] params is an object that supports ‘locale’, ‘start_date’, ‘content_type_uid’, and ‘type’ queries.
@@ -91,6 +91,8 @@ module Contentstack
         host = "#{Contentstack::Host::PROTOCOL}azure-na-cdn.#{Contentstack::Host::HOST}"
       when "azure-eu"
         host = "#{Contentstack::Host::PROTOCOL}azure-eu-cdn.#{Contentstack::Host::HOST}"
+      when "gcp-na"
+        host = "#{Contentstack::Host::PROTOCOL}gcp-na-cdn.#{Contentstack::Host::HOST}"
       end
       host
     end
@@ -109,12 +111,14 @@ module Contentstack
           host = "#{Contentstack::Host::PROTOCOL}azure-na-cdn.#{custom_host}"
         when "azure-eu"
           host = "#{Contentstack::Host::PROTOCOL}azure-eu-cdn.#{custom_host}"
+        when "gcp-na"
+          host = "#{Contentstack::Host::PROTOCOL}gcp-na-cdn.#{custom_host}"
         end
       elsif options[:host].present? && region.empty?
         custom_host = options[:host]
         host = "#{Contentstack::Host::PROTOCOL}cdn.#{custom_host}"
       else
-        host = "#{Contentstack::Host::PROTOCOL}#{Contentstack::Host::DEFAULT_HOST}" #set default host if region and host is empty  
+        host = "#{Contentstack::Host::PROTOCOL}#{Contentstack::Host::DEFAULT_HOST}" #set default host if region and host is empty
       end
       host
     end
