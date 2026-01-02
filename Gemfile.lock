@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    contentstack (0.8.0)
+    contentstack (0.8.1)
       activesupport (>= 3.2)
       contentstack_utils (~> 1.0)
 
