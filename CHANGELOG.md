@@ -1,6 +1,13 @@
 ## CHANGELOG
 
 ## Version 0.8.0
+### Date: 05th-January-2026
+ ### Security Bug
+ - Fixed snyk security issues and updated license year
+
+------------------------------------------------
+
+## Version 0.8.0
 ### Date: 14th-May-2024
  ### Enhancement
  - Region support for GCP-NA added
