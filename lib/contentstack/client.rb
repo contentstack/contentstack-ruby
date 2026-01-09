@@ -10,12 +10,12 @@ module Contentstack
     attr_reader :region, :host
     # Initialize "Contentstack" Client instance
     def initialize(api_key, delivery_token, environment, options={})
-      raise Contentstack::Error.new("Api Key is not valid") if api_key.class != String
-      raise Contentstack::Error.new("Api Key Field Should not be Empty") if api_key.empty?
-      raise Contentstack::Error.new("Delivery Token is not valid") if delivery_token.class != String
-      raise Contentstack::Error.new("Delivery Token Field Should not be Empty") if delivery_token.empty?
-      raise Contentstack::Error.new("Envirnoment Field is not valid") if environment.class != String
-      raise Contentstack::Error.new("Envirnoment Field Should not be Empty") if environment.empty?
+      raise Contentstack::Error.new(Contentstack::ErrorMessages::API_KEY_INVALID) if api_key.class != String
+      raise Contentstack::Error.new(Contentstack::ErrorMessages::API_KEY_REQUIRED) if api_key.empty?
+      raise Contentstack::Error.new(Contentstack::ErrorMessages::DELIVERY_TOKEN_INVALID) if delivery_token.class != String
+      raise Contentstack::Error.new(Contentstack::ErrorMessages::DELIVERY_TOKEN_REQUIRED) if delivery_token.empty?
+      raise Contentstack::Error.new(Contentstack::ErrorMessages::ENVIRONMENT_INVALID) if environment.class != String
+      raise Contentstack::Error.new(Contentstack::ErrorMessages::ENVIRONMENT_REQUIRED) if environment.empty?
       @region = options[:region].nil? ? Contentstack::Region::US : options[:region]
       # @host = options[:host].nil? ? get_default_region_hosts(@region) : options[:host] #removed for not supporting custom host with regions
       @host = get_host_by_region(@region, options) # Added new method for custom host support with different regions
@@ -32,8 +32,8 @@ module Contentstack
         "retryLimit"=> @retryLimit,
         "errorRetry" => @errorRetry
       }
-      raise Contentstack::Error.new("Proxy URL Should not be Empty") if @proxy_details.present? && @proxy_details[:url].empty?
-      raise Contentstack::Error.new("Proxy Port Should not be Empty") if @proxy_details.present? && @proxy_details[:port].empty?
+      raise Contentstack::Error.new(Contentstack::ErrorMessages::PROXY_URL_REQUIRED) if @proxy_details.present? && @proxy_details[:url].empty?
+      raise Contentstack::Error.new(Contentstack::ErrorMessages::PROXY_PORT_REQUIRED) if @proxy_details.present? && @proxy_details[:port].empty?
       API.init_api(api_key, delivery_token, environment,  @host, @branch, @live_preview, @proxy_details, retry_options)
     end
 

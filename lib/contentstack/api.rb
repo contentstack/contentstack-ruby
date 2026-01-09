@@ -82,7 +82,7 @@ module Contentstack
           sleep(retryDelay_in_seconds.to_i) #sleep method requires time in seconds as parameter
           response = fetch_retry(path, query, (count + 1))
         else
-         raise Contentstack::Error.new(response) #Retry Limit exceeded
+         raise Contentstack::Error.new(Contentstack::ErrorMessages.request_failed(response)) #Retry Limit exceeded
         end  
       else
         to_render_content(response)
@@ -125,7 +125,7 @@ module Contentstack
         error_response = JSON.parse(response.string)
         error_status = {"status_code" => response.status[0], "status_message" => response.status[1]}
         error = error_response.merge(error_status)
-        raise Contentstack::Error.new(error.to_s)
+        raise Contentstack::Error.new(Contentstack::ErrorMessages.request_error(error))
       end
     end
 
@@ -165,7 +165,7 @@ module Contentstack
         error_response = JSON.parse(response.string)
         error_status = {"status_code" => response.status[0], "status_message" => response.status[1]}
         error = error_response.merge(error_status)
-        raise Contentstack::Error.new(error.to_s)
+        raise Contentstack::Error.new(Contentstack::ErrorMessages.request_error(error))
       end
     end
 
