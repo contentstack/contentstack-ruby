@@ -1,6 +1,13 @@
 ## CHANGELOG
 
-## Version 0.8.0
+## Version 0.8.2
+### Date: 12th-January-2026
+ ### Improved error messages
+ - 
+
+------------------------------------------------
+
+## Version 0.8.1
 ### Date: 05th-January-2026
  ### Security Bug
  - Fixed snyk security issues and updated license year
