@@ -9,7 +9,8 @@ Gem::Specification.new do |s|
   s.authors = [%q{Contentstack}]
   s.email = ["support@contentstack.com"]
 
-  s.required_ruby_version = '>= 2.0'
+  # Aligns with nokogiri >= 1.19.x (transitive via contentstack_utils), which requires Ruby >= 3.2.
+  s.required_ruby_version = '>= 3.3'
 
   s.license = "MIT"
   s.homepage = "https://github.com/contentstack/contentstack-ruby"
@@ -21,10 +22,10 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency 'activesupport', '>= 3.2'
-  s.add_dependency 'contentstack_utils' , '~> 1.0'
+  s.add_dependency 'contentstack_utils' , '~> 1.2'
   
-  s.add_development_dependency 'rspec', '~> 3.10.0'
-  s.add_development_dependency 'webmock', '~> 3.11.0'
-  s.add_development_dependency 'simplecov', '~> 0.21.1'
-  s.add_development_dependency 'yard', '~> 0.9.26'
+  s.add_development_dependency 'rspec', '~> 3.13.0'
+  s.add_development_dependency 'webmock', '~> 3.26.0'
+  s.add_development_dependency 'simplecov', '~> 0.22.0'
+  s.add_development_dependency 'yard', '~> 0.9.38'
 end

@@ -1,5 +1,14 @@
 ## CHANGELOG
 
+## Version 0.8.3
+### Date: 27th-March-2026
+ ### Security and Compatibility
+ - Updated `nokogiri` dependency to `>= 1.19.1` to address the reported vulnerability.
+ - Added `.ruby-version` for Ruby 3.3.11 and aligned gem requirements for modern Ruby/macOS environments.
+ - Added `script/bundle_safe` helper to avoid Bundler OpenSSL MD5 probe crashes on affected Ruby/OpenSSL setups.
+
+------------------------------------------------
+
 ## Version 0.8.2
 ### Date: 12th-January-2026
  ### Improved error messages
