@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+## Version 0.8.4
+### Date: 15th-April-2026
+ ### Security and Compatibility
+ - Fixed reported security vulnerability.
+
 ## Version 0.8.3
 ### Date: 27th-March-2026
  ### Security and Compatibility
