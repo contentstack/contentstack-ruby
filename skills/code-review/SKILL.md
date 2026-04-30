@@ -32,7 +32,7 @@ description: Use when authoring or reviewing a pull request for contentstack-rub
 
 ### Process notes
 
-- **`master`** is protected by **`.github/workflows/check-branch.yml`**; follow team flow (**`staging`** → **`master`**) for production promotion.
+- Follow direct release flow **`development` -> `master`** (no `staging` handoff in the release path).
 - Run **`bundle exec rspec`** locally; CI may not run the full suite on every PR in this repository.
 
 ## References
