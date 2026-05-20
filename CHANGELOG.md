@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+## Version 0.9.0
+### Date: 19th-May-2026
+ ### Features
+ - Added `variants(variant_uids, branch_name)` on `Contentstack::Entry` and `Contentstack::Query` to fetch entry variants with optional per-request branch scoping. Requests send the `x-cs-variant-uid` header (comma-separated UIDs) and respect stack-level or per-call branch.
+
 ## Version 0.8.4
 ### Date: 15th-April-2026
  ### Security and Compatibility

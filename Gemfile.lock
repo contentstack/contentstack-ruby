@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    contentstack (0.8.4)
+    contentstack (0.8.5)
       activesupport (>= 3.2)
       contentstack_utils (~> 1.2)
 
@@ -39,12 +39,12 @@ GEM
     hashdiff (1.2.1)
     i18n (1.14.8)
       concurrent-ruby (~> 1.0)
-    json (2.19.4)
+    json (2.19.5)
     logger (1.7.0)
-    minitest (6.0.5)
+    minitest (6.0.6)
       drb (~> 2.0)
       prism (~> 1.5)
-    nokogiri (1.19.2-arm64-darwin)
+    nokogiri (1.19.3-arm64-darwin)
       racc (~> 1.4)
     prism (1.9.0)
     public_suffix (7.0.5)
