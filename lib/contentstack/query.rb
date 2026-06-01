@@ -565,16 +565,19 @@ module Contentstack
       self
     end
 
-    # Include objects in 'Draft' mode in response
-    #
-    # Example
-    #
-    #    @query = @stack.content_type('product').query
-    #    @query.include_draft
+    # @deprecated since 0.8.5 The Content Delivery API returns published content only.
+    #   Unpublished or draft entries are not available through CDA queries. Use Live Preview
+    #   with the Preview Service, or the Content Management API, to access unpublished content.
     #
     # @return [Contentstack::Query]
-    def include_draft(flag=true)
-      @query[:include_draft] = flag
+    def include_draft(_flag=true)
+      warn(
+        "Contentstack: Query#include_draft is deprecated and has no effect on the Content " \
+        "Delivery API, which returns published content only. To preview unpublished entries, " \
+        "use Live Preview with the Preview Service. To manage or fetch draft entries, use " \
+        "the Content Management API.",
+        uplevel: 1
+      )
       self
     end
 

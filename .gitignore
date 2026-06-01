@@ -4,6 +4,7 @@ test
 doc
 spec-integration
 coverage
+spec/.env.test
 \.yardoc
 .DS_Store
 .bundle/

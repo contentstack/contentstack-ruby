@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+## Version 0.8.5
+### Date: 5th-June-2026
+ ### Deprecated
+ - `Query#include_draft` is deprecated. The Content Delivery API returns published content only; the `include_draft` query parameter has no effect. Use Live Preview with the Preview Service to preview unpublished entries, or the Content Management API to work with draft content.
+
 ## Version 0.8.4
 ### Date: 15th-April-2026
  ### Security and Compatibility

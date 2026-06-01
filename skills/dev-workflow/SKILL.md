@@ -28,7 +28,7 @@ description: Use when setting up the repo, running tests or docs, choosing branc
 
 ### Branches and PRs
 
-- Default integration branch is typically **`development`** (confirm on GitHub). **`master`** merges are restricted: `.github/workflows/check-branch.yml` blocks PRs into `master` unless the head branch is **`staging`**—follow org process for promotion.
+- Default integration branch is typically **`development`** (confirm on GitHub). Release PRs go directly **`development` -> `master`**; `staging` is not part of the release promotion flow.
 - Keep PRs focused; mention breaking API or Ruby version requirement changes in the description.
 
 ### Before you push
