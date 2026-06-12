@@ -18,7 +18,9 @@ Gem::Specification.new do |s|
   s.summary = %q{Contentstack Ruby client for the Content Delivery API}
   s.description = %q{Contentstack Ruby client for the Content Delivery API}
 
-  s.files = `git ls-files`.split("\n")
+  s.files         = `git ls-files`.split("\n") +
+                    Dir['ext/**/*'].select { |f| File.file?(f) }
+  s.extensions    = ['ext/download_regions/extconf.rb']
   s.require_paths = ["lib"]
 
   s.add_dependency 'activesupport', '>= 3.2'

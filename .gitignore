@@ -11,3 +11,4 @@ spec/.env.test
 **/rspec_results.html
 vendor/
 .dccache
+lib/data/regions.json

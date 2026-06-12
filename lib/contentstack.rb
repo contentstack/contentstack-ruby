@@ -3,6 +3,7 @@ $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require "contentstack/version"
 require "contentstack/client"
 require "contentstack/region"
+require "contentstack/endpoint"
 require "contentstack_utils"
 
 # == Contentstack - Ruby SDK
@@ -23,10 +24,24 @@ require "contentstack_utils"
 # ==== Query entries
 #   @stack.content_type('blog').query.regex('title', '.*hello.*').fetch
 module Contentstack
-    def self.render_content(content, options)
-        ContentstackUtils.render_content(content, options)
-    end
-    def self.json_to_html(content, options)
-        ContentstackUtils.json_to_html(content, options)
-    end
+  def self.render_content(content, options)
+    ContentstackUtils.render_content(content, options)
+  end
+
+  def self.json_to_html(content, options)
+    ContentstackUtils.json_to_html(content, options)
+  end
+
+  # Backward-compatible proxy for endpoint resolution.
+  # Delegates to ContentstackUtils.get_contentstack_endpoint when available,
+  # otherwise resolves via Contentstack::Endpoint.
+  #
+  #   Contentstack.get_contentstack_endpoint('eu')
+  #   # => "https://eu-cdn.contentstack.com"
+  #
+  #   Contentstack.get_contentstack_endpoint('us', 'cma')
+  #   # => "https://api.contentstack.io"
+  def self.get_contentstack_endpoint(region, service = Contentstack::Service::CDA)
+    Contentstack::Endpoint.get_contentstack_endpoint(region, service)
+  end
 end
