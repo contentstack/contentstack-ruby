@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    contentstack (0.8.5)
+    contentstack (0.9.0)
       activesupport (>= 3.2)
       contentstack_utils (~> 1.2)
 
@@ -119,7 +119,7 @@ CHECKSUMS
   bundler (4.0.11) sha256=5bcec0fb78302e48d02ee46f10ee6e6942be647ba5b44a6d1ddfda9a240ce785
   concurrent-ruby (1.3.6) sha256=6b56837e1e7e5292f9864f34b69c5a2cbc75c0cf5338f1ce9903d10fa762d5ab
   connection_pool (3.0.2) sha256=33fff5ba71a12d2aa26cb72b1db8bba2a1a01823559fb01d29eb74c286e62e0a
-  contentstack (0.8.5)
+  contentstack (0.9.0)
   contentstack_utils (1.2.3) sha256=cf2f5f996eb487559fd2d7d48a99262710f53dec62c84c6e325b9a598cd31ba7
   crack (1.0.1) sha256=ff4a10390cd31d66440b7524eb1841874db86201d5b70032028553130b6d4c7e
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
