@@ -1,5 +1,17 @@
 ## CHANGELOG
 
+## Version 0.9.0
+### Date: 15th-June-2026
+ ### Enhancement
+ - Introduced centralized endpoint resolution via `Contentstack::Endpoint.get_contentstack_endpoint(region, service)`, eliminating all hardcoded Contentstack hostnames from the SDK.
+ - Added `Contentstack.get_contentstack_endpoint` as a backward-compatible module-level proxy, aligned with the `ContentstackUtils` endpoint resolution API.
+ - Added `Contentstack::Service` class with `CDA`, `CMA`, and `PREVIEW` constants.
+ - Added `Contentstack::Region::GCP_EU` region constant.
+ - Endpoint URLs are driven by a local `lib/data/regions.json` file with automatic runtime fallback to the Contentstack registry when the file is absent.
+ - Added `bundle exec rake refresh_regions` task to manually update region metadata from the registry.
+
+------------------------------------------------
+
 ## Version 0.8.5
 ### Date: 5th-June-2026
  ### Deprecated
