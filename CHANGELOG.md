@@ -1,5 +1,12 @@
 ## CHANGELOG
 
+## Version 0.9.1
+### Date: 29th-June-2026
+ ### Fix
+ - Snyk fixes
+
+------------------------------------------------
+
 ## Version 0.9.0
 ### Date: 15th-June-2026
  ### Enhancement
