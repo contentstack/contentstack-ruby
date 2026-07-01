@@ -1,5 +1,12 @@
 ## CHANGELOG
 
+## Version 0.9.2
+### Date: 6th-July-2026
+ ### Fix
+ -  - Snyk fixes `json >= 2.19.9`.
+
+------------------------------------------------
+
 ## Version 0.9.1
 ### Date: 29th-June-2026
  ### Fix
