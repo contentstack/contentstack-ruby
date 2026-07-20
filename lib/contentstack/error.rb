@@ -17,6 +17,14 @@ module Contentstack
     def self.request_error(error)
       "The request encountered an issue due to #{error}. Review the details and try again."
     end
+
+    def self.region_invalid(region, supported)
+      "Unknown region '#{region}'. Supported regions: #{supported.join(', ')}."
+    end
+
+    def self.service_invalid(service, supported)
+      "Unknown service '#{service}'. Supported services: #{supported.join(', ')}."
+    end
   end
 
   class Error < StandardError

@@ -30,7 +30,7 @@ description: Use when writing or fixing RSpec examples, WebMock stubs, JSON fixt
 
 ### Helpers
 
-- **`create_client`** and **`create_preview_client`** in **`spec_helper`** build clients using **`ENV['API_KEY']`**, **`ENV['DELIVERY_TOKEN']`**, **`ENV['ENVIRONMENT']`** — tests should not rely on real credentials; stubs supply responses.
+- **`create_client`** and **`create_preview_client`** in **`spec_helper`** build clients using **`ENV['API_KEY']`**, **`ENV['DELIVERY_TOKEN']`**, **`ENV['ENVIRONMENT']`**. Copy **`spec/.env.test.example`** to **`spec/.env.test`** (gitignored) for local runs without exporting env vars; CLI/env values already set take precedence. Tests use WebMock stubs and do not require live API calls.
 
 ### Coverage
 

@@ -4,9 +4,11 @@ test
 doc
 spec-integration
 coverage
+spec/.env.test
 \.yardoc
 .DS_Store
 .bundle/
 **/rspec_results.html
 vendor/
 .dccache
+lib/data/regions.json

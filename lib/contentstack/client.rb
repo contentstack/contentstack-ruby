@@ -2,6 +2,7 @@ require 'contentstack/api'
 require 'contentstack/content_type'
 require 'contentstack/asset_collection'
 require 'contentstack/sync_result'
+require 'contentstack/endpoint'
 require 'util'
 require 'contentstack/error'
 module Contentstack
@@ -80,47 +81,14 @@ module Contentstack
     end
 
     private
-    def get_default_region_hosts(region='us')
-      host = "#{Contentstack::Host::PROTOCOL}#{Contentstack::Host::DEFAULT_HOST}" #set default host if region is nil
-      case region
-      when "us"
-        host = "#{Contentstack::Host::PROTOCOL}#{Contentstack::Host::DEFAULT_HOST}"
-      when "eu"
-        host = "#{Contentstack::Host::PROTOCOL}eu-cdn.#{Contentstack::Host::HOST}"
-      when "azure-na"
-        host = "#{Contentstack::Host::PROTOCOL}azure-na-cdn.#{Contentstack::Host::HOST}"
-      when "azure-eu"
-        host = "#{Contentstack::Host::PROTOCOL}azure-eu-cdn.#{Contentstack::Host::HOST}"
-      when "gcp-na"
-        host = "#{Contentstack::Host::PROTOCOL}gcp-na-cdn.#{Contentstack::Host::HOST}"
-      end
-      host
-    end
 
     def get_host_by_region(region, options)
-      if options[:host].nil? && region.present?
-        host = get_default_region_hosts(region)
-      elsif options[:host].present? && region.present?
-        custom_host = options[:host]
-        case region
-        when "us"
-        host = "#{Contentstack::Host::PROTOCOL}cdn.#{custom_host}"
-        when "eu"
-          host = "#{Contentstack::Host::PROTOCOL}eu-cdn.#{custom_host}"
-        when "azure-na"
-          host = "#{Contentstack::Host::PROTOCOL}azure-na-cdn.#{custom_host}"
-        when "azure-eu"
-          host = "#{Contentstack::Host::PROTOCOL}azure-eu-cdn.#{custom_host}"
-        when "gcp-na"
-          host = "#{Contentstack::Host::PROTOCOL}gcp-na-cdn.#{custom_host}"
-        end
-      elsif options[:host].present? && region.empty?
-        custom_host = options[:host]
-        host = "#{Contentstack::Host::PROTOCOL}cdn.#{custom_host}"
-      else
-        host = "#{Contentstack::Host::PROTOCOL}#{Contentstack::Host::DEFAULT_HOST}" #set default host if region and host is empty
-      end
-      host
+      custom_host = options[:host]
+      Contentstack::Endpoint.get_contentstack_endpoint(
+        region.present? ? region : Contentstack::Region::US,
+        Contentstack::Service::CDA,
+        custom_host.present? ? custom_host : nil
+      )
     end
 
   end

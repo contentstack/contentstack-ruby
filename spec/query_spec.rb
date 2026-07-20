@@ -165,8 +165,13 @@ describe Contentstack::Query do
     expect(data.first.fields[:locale]).not_to be nil
   end
 
-  it "should get data using `include_draft` method" do
-    data = category_query.include_draft.fetch
+  it "warns when `include_draft` is called and does not send include_draft to the API" do
+    query = category_query
+    expect {
+      query.include_draft
+    }.to output(/Query#include_draft is deprecated/).to_stderr
+    expect(query.query).not_to have_key(:include_draft)
+    data = query.fetch
     expect(data.length).to eq 5
   end
 

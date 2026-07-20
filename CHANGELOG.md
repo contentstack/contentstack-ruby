@@ -1,9 +1,42 @@
 ## CHANGELOG
 
-## Version 0.9.0
-### Date: 19th-May-2026
+## Version 0.10.0
+### Date: 27th-July-2026
  ### Features
  - Added `variants(variant_uids, branch_name)` on `Contentstack::Entry` and `Contentstack::Query` to fetch entry variants with optional per-request branch scoping. Requests send the `x-cs-variant-uid` header (comma-separated UIDs) and respect stack-level or per-call branch.
+
+------------------------------------------------
+
+## Version 0.9.2
+### Date: 6th-July-2026
+ ### Fix
+ -  - Snyk fixes `json >= 2.19.9`.
+
+------------------------------------------------
+
+## Version 0.9.1
+### Date: 29th-June-2026
+ ### Fix
+ - Snyk fixes
+
+------------------------------------------------
+
+## Version 0.9.0
+### Date: 15th-June-2026
+ ### Enhancement
+ - Introduced centralized endpoint resolution via `Contentstack::Endpoint.get_contentstack_endpoint(region, service)`, eliminating all hardcoded Contentstack hostnames from the SDK.
+ - Added `Contentstack.get_contentstack_endpoint` as a backward-compatible module-level proxy, aligned with the `ContentstackUtils` endpoint resolution API.
+ - Added `Contentstack::Service` class with `CDA`, `CMA`, and `PREVIEW` constants.
+ - Added `Contentstack::Region::GCP_EU` region constant.
+ - Endpoint URLs are driven by a local `lib/data/regions.json` file with automatic runtime fallback to the Contentstack registry when the file is absent.
+ - Added `bundle exec rake refresh_regions` task to manually update region metadata from the registry.
+
+------------------------------------------------
+
+## Version 0.8.5
+### Date: 5th-June-2026
+ ### Deprecated
+ - `Query#include_draft` is deprecated. The Content Delivery API returns published content only; the `include_draft` query parameter has no effect. Use Live Preview with the Preview Service to preview unpublished entries, or the Content Management API to work with draft content.
 
 ## Version 0.8.4
 ### Date: 15th-April-2026
