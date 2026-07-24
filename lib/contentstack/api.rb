@@ -73,7 +73,51 @@ module Contentstack
       fetch_retry(path, query)
     end
 
+    def self.validate_variant_uids!(variant_uids)
+      if variant_uids.nil? || (variant_uids.respond_to?(:empty?) && variant_uids.empty?)
+        raise Contentstack::Error.new("Variant UID(s) are required. Provide a variant UID or an array of variant UIDs.")
+      end
+      unless variant_uids.is_a?(String) || variant_uids.is_a?(Array)
+        raise Contentstack::Error.new("Variant UID(s) must be a String or Array of Strings.")
+      end
+      if variant_uids.is_a?(Array) && variant_uids.any? { |uid| !uid.is_a?(String) || uid.empty? }
+        raise Contentstack::Error.new("Variant UID(s) must be a String or Array of Strings.")
+      end
+    end
+
     private
+    def self.prepare_query(q)
+      q = (q || {}).dup
+      variant_uids = q.delete(:variant_uids)
+      branch_override = q.delete(:branch)
+      [q, variant_uids, branch_override]
+    end
+
+    def self.format_variant_uids(variant_uids)
+      return nil if variant_uids.nil?
+
+      case variant_uids
+      when String
+        variant_uids.strip
+      when Array
+        variant_uids.map(&:to_s).reject(&:empty?).join(', ')
+      end
+    end
+
+    def self.resolve_branch(branch_override)
+      branch = branch_override
+      branch = @branch if branch.nil? || branch.to_s.empty?
+      branch
+    end
+
+    def self.apply_variant_headers(params, variant_uids, branch_override)
+      formatted = format_variant_uids(variant_uids)
+      params["x-cs-variant-uid"] = formatted if formatted && !formatted.empty?
+
+      branch = resolve_branch(branch_override)
+      params["branch"] = branch if !branch.nil? && !branch.empty?
+      params
+    end
     def self.fetch_retry(path, query=nil, count=0)
       response = send_request(path, query)
       if @errorRetry.include?(response["status_code"].to_i)
@@ -90,7 +134,7 @@ module Contentstack
     end
 
     def self.send_request(path, q=nil)
-      q ||= {}
+      q, variant_uids, branch_override = prepare_query(q)
 
       q.merge!(@headers)
 
@@ -103,9 +147,7 @@ module Contentstack
         "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}",
         "read_timeout" => @timeout
       }
-      if !@branch.nil? && !@branch.empty?
-        params["branch"] = @branch
-      end
+      apply_variant_headers(params, variant_uids, branch_override)
 
       if @proxy_details.present? && @proxy_details[:url].present? && @proxy_details[:port].present? && @proxy_details[:username].empty? && @proxy_details[:password].empty?
         params["proxy"] = URI.parse("http://#{@proxy_details[:url]}:#{@proxy_details[:port]}/").to_s
@@ -130,7 +172,7 @@ module Contentstack
     end
 
     def self.send_preview_request(path, q=nil)
-      q ||= {}
+      q, variant_uids, branch_override = prepare_query(q)
 
       q.merge!({live_preview: (!@live_preview.key?(:live_preview) ? 'init' : @live_preview[:live_preview]),})
 
@@ -143,9 +185,7 @@ module Contentstack
         "x-user-agent" => "ruby-sdk/#{Contentstack::VERSION}",
         "read_timeout" => @timeout
       }
-      if !@branch.nil? && !@branch.empty?
-        params["branch"] = @branch
-      end
+      apply_variant_headers(params, variant_uids, branch_override)
 
       if @proxy_details.present? && @proxy_details[:url].present? && @proxy_details[:port].present? && @proxy_details[:username].empty? && @proxy_details[:password].empty?
         params["proxy"] = URI.parse("http://#{@proxy_details[:url]}:#{@proxy_details[:port]}/").to_s
