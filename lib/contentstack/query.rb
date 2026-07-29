@@ -552,6 +552,27 @@ module Contentstack
       self
     end
 
+    # Scope the entries request to one or more entry variants, optionally on a branch.
+    #
+    # @param [String, Array<String>] variant_uids A variant UID, or an array of variant UIDs
+    # @param [String] branch_name Branch name to scope the request (overrides stack-level branch)
+    #
+    # Example
+    #
+    #    @query = @stack.content_type('home_page').query
+    #    @query.variants('xyz', 'branch_name').fetch
+    #
+    #    @query = @stack.content_type('home_page').query
+    #    @query.variants(['variant1', 'variant2'], 'branch_name').fetch
+    #
+    # @return [Contentstack::Query]
+    def variants(variant_uids, branch_name = nil)
+      API.validate_variant_uids!(variant_uids)
+      @query[:variant_uids] = variant_uids
+      @query[:branch] = branch_name if branch_name.is_a?(String) && !branch_name.empty?
+      self
+    end
+
     # Include Embedded Objects (Entries and Assets) along with entry/entries details.
     #
     # Example
