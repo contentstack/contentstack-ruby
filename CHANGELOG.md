@@ -1,5 +1,12 @@
 ## CHANGELOG
 
+## Version 0.10.1
+### Date: 13th-August-2026
+ ### Security
+ - Upgraded `json` dependency from `2.20.0` to `2.21.2` to remediate CVE-2026-71847 (SNYK-RUBY-JSON-18599450) — Use After Free (CWE-416) in `JSON::ResumableParser#partial_value`, CVSS 8.7 High.
+
+------------------------------------------------
+
 ## Version 0.10.0
 ### Date: 27th-July-2026
  ### Features
